@@ -1,7 +1,7 @@
 """This file  has theentry point implementtion for RESTapi services."""
 from fastapi import FastAPI
-from .users import User
-from .core import Calendar, Event
+from users_sub import User
+from core import Calendar, Event
 from typing import List
 from datetime import date, datetime
 

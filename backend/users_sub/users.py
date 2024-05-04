@@ -4,7 +4,7 @@ This module contains the classes and methods to manage the users of the applicat
 Author: Juan Felipe Guevara Olaya <> Junquito
 """
 from pydantic import BaseModel
-from .core import Calendar, Event
+from core import Calendar, Event
 
 class User(BaseModel):
     gmail : str

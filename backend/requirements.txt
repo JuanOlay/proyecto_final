@@ -1,5 +1,4 @@
 pydantic
 datetime
 fastapi
-sqlalchemy
-creo que podriamos llegar a usar : zoneinfo, time
+sqlalchemy 

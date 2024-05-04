@@ -9,6 +9,7 @@ from core import Calendar, Event
 class User(BaseModel):
     gmail : str
     password : str
+    grants : dict
 
     @staticmethod
     def login(gmail: str, password: str):
@@ -19,4 +20,14 @@ class User(BaseModel):
             gmail (str): the gmail of the user
             password (str): the password of the user
         """
-        return User(gmail="pipe", password="1234")
+        return User(gmail="pipe", password="1234" ,)
+
+    def can_access_calendar(self, calendar: Calendar , grants = {"access" : True}):
+        """
+        This method is used to check if the user can access the calendar.
+
+        Args:
+            calendar (Calendar): the calendar to check
+        """
+        return self.grants.get("access")
+    #no estoy seguro de la utilidad de esta funcion :p

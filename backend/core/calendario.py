@@ -7,6 +7,7 @@ from typing import List
 from datetime import date, datetime 
 import calendar
 from .events import Event
+from db_connection import PostgresConnection
 
 
 class Calendar():

@@ -6,9 +6,9 @@ Author: Juan Felipe Guevara Olaya <> Junquito <>
 from typing import List
 from datetime import date, datetime 
 import calendar
-from .events import Event
+from events import Event , EventDB
+from sqlalchemy import Column, String, Date, Boolean, DateTime
 from db_connection import PostgresConnection
-
 
 class Calendar():
     """This class represents a calendar"""
@@ -25,14 +25,26 @@ class Calendar():
         Returns:
             list: the list of dates.
         """
+        if len(cls.events) == 0:
+            list_events = []
+            connection = PostgresConnection("ud_ap_user", "P4$$w0rd", "localhost", 5432, "ud_ad_project")      
+            for event_db in connection.session.query(EventDB).all():
+                event_obj = Event(
+                    day = event_db.day,
+                    type_of_event = event_db.type_of_event,
+                    name = event_db.name,
+                    notif_bool = event_db.notif_bool,
+                    email_adresses_list = event_db.email_adresses_list,
+                    notif_time = event_db.notif_time
+                )
+                list_events.append(event_obj)
+            cls.events = list_events
         return cls.events
     
     @classmethod
-    def show_calendar(self, age : int):
-        self.age = age
-        if age > 1900:
-            if age < 2100:
-                return calendar.calendar(age,  2, 2 ,2)
+    def show_calendar(cls, age: int):
+        if age > 1900 and age < 2100:
+            return calendar.calendar(age, 2, 2, 2)
 
     @classmethod
     def show_by_type(cls, type_of_event):

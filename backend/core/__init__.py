@@ -1,3 +1,3 @@
 """Module exposition"""
 from .calendario import Calendar
-from .events import Event
+from events import Event

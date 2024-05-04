@@ -44,8 +44,10 @@ osea tipo faltaria una lista de los tipos de eventos en el calendario o seria en
 def show_by_type(type_of_event: str):
     return Calendar.show_by_type(type_of_event = type_of_event)
 
+"""
 @app.patch("/event/mark_receive_notifications/{event}")
 def mark_receive_notifications(event : Event) -> bool:
-    """This is a service to decide receive notifications"""
+    #This is a service to decide receive notifications
     event = Event
     return event.mark_receive_notifications(event)
+"""

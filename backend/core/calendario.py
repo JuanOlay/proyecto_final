@@ -6,7 +6,7 @@ Author: Juan Felipe Guevara Olaya <> Junquito <>
 from typing import List
 from datetime import date, datetime 
 import calendar
-from events import Event , EventDB
+from .events import Event , EventDB
 from sqlalchemy import Column, String, Date, Boolean, DateTime
 from db_connection import PostgresConnection
 

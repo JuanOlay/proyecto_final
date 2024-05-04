@@ -9,7 +9,6 @@ from core import Calendar, Event
 class User(BaseModel):
     gmail : str
     password : str
-    calendar : Calendar
 
     @staticmethod
     def login(gmail: str, password: str):
@@ -20,3 +19,4 @@ class User(BaseModel):
             gmail (str): the gmail of the user
             password (str): the password of the user
         """
+        return User(gmail="pipe", password="1234")

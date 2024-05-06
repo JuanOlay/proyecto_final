@@ -40,7 +40,7 @@ osea tipo faltaria una lista de los tipos de eventos en el calendario o seria en
 """
     
 
-@app.get("/calendar/show_by_type/{type_of_event}", response_model=List[Event])
+@app.get("/calendar/show_by_type/{type_of_event}", response_model = List[Event])
 def show_by_type(type_of_event: str):
     return Calendar.show_by_type(type_of_event = type_of_event)
 

@@ -1,4 +1,4 @@
-from .core import Event, Calendar
+from core import Event, Calendar
 
 class Notifier():
 

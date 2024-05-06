@@ -23,10 +23,13 @@ class Event(BaseModel):
 
     def __init__(self):
         self.connection = PostgresConnection(
-            "ud_ap_user", "P4$$w0rd", "localhost", 5432, "ud_ad_project"
+            "felipe.guevara.o.1211@gmail.com", "Password", "localhost", 5432, "Calendario_para_proyecto_final"
         )
 
     def add_to_db(self):
+        """
+        ni idea de para que es esta funcion pero se ve bonita ahi
+        """
         session = self.connection.session()
         events_db = EventDB(
             day = self.day,
@@ -44,10 +47,29 @@ class Event(BaseModel):
     class Config:
         orm_mode = True
 
-
 Base = declarative_base()
 
 class EventDB(Base):
+    """
+    SQLAlchemy database model for the 'events' table.
+    Each instance of this class represents a row in the 'events' table.
+
+    Attributes:
+    __tablename__ : str
+        The name of the table this class maps to.
+    day : Date
+        The date of the event. This is also the primary key for the table.
+    type_of_event : String
+        The type of the event.
+    name : String
+        The name of the event.
+    notif_bool : Boolean
+        A boolean value indicating whether a notification for the event is enabled or not.
+    email_adresses_list : String
+        A string containing a list of email addresses for the event notifications.
+    notif_time : DateTime
+        The date and time when the notification for the event should be sent.
+    """
     __tablename__ = "events"
 
     day = Column(Date, primary_key = True)

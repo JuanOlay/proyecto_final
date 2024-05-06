@@ -7,16 +7,13 @@ from typing import List
 from datetime import date, datetime 
 import calendar
 from .events import Event , EventDB
-from sqlalchemy import Column, String, Date, Boolean, DateTime
 from db_connection import PostgresConnection
 
 class Calendar():
     """This class represents a calendar"""
 
-
     events = []
 
-    
     @classmethod
     def show_events(cls):
         """
@@ -27,7 +24,7 @@ class Calendar():
         """
         if len(cls.events) == 0:
             list_events = []
-            connection = PostgresConnection("ud_ap_user", "P4$$w0rd", "localhost", 5432, "ud_ad_project")      
+            connection = PostgresConnection("felipe.guevara.o.1211@gmail.com", "Password", "localhost", 5432, "Calendario_para_proyecto_final")      
             for event_db in connection.session.query(EventDB).all():
                 event_obj = Event(
                     day = event_db.day,
@@ -43,6 +40,12 @@ class Calendar():
     
     @classmethod
     def show_calendar(cls, age: int):
+        """
+        This method is used to show a calendar of the year.
+
+        Returns:
+            calendar with the function .calendar of the year imput.
+        """
         if age > 1900 and age < 2100:
             return calendar.calendar(age, 2, 2, 2)
 

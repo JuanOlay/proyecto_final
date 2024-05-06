@@ -20,7 +20,7 @@ class User(BaseModel):
             gmail (str): the gmail of the user
             password (str): the password of the user
         """
-        return User(gmail="pipe", password="1234" ,)
+        return User(gmail="felipe.guevara.o.1211@gmail.com", password="Password" ,)
 
     def can_access_calendar(self, calendar: Calendar , grants = {"access" : True}):
         """

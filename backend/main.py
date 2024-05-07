@@ -52,3 +52,6 @@ def mark_receive_notifications(event : Event) -> bool:
     event = Event
     return event.mark_receive_notifications(event)
 """
+@app.delete("/user/delete_event/{name}")
+def delete_event(name: str):
+    Calendar.delete_event(name)

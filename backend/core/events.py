@@ -4,16 +4,15 @@ This file contains the classes and methods to manage the dates of the applicatio
 Author: Juan Felipe Guevara Olaya <> Junquito <>
 
 """
-from datetime import date, datetime
+from datetime import date, datetime 
 from pydantic import BaseModel
 from typing import List
-from db_connection import PostgresConnection
 from sqlalchemy import Column, String, Date, Boolean, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 class Event(BaseModel):
     """This class represents the behavior of a date"""
-
+    
     day : date
     type_of_event : str
     name : str
@@ -33,7 +32,7 @@ class Event(BaseModel):
             email_adresses_list (List): a list of email addresses for the event notifications
             notif_time (datetime): the date and time when the notification for the event should be sent
         """
-        super().__init__(day=day, type_of_event=type_of_event, name=name, notif_bool=notif_bool, email_adresses_list=email_adresses_list, notif_time=notif_time)
+        super().__init__(day = day, type_of_event = type_of_event, name = name, notif_bool = notif_bool, email_adresses_list = email_adresses_list, notif_time = notif_time)
 
     def to_json(self):
         # Convierte el objeto a un diccionario que puede ser serializado a JSON
@@ -46,9 +45,12 @@ class Event(BaseModel):
             "notif_time": self.notif_time.isoformat()
         }
     
+
     def add_to_db(self):
         """
         ni idea de para que es esta funcion pero se ve bonita ahi
+
+        creo que es para añadirlo a la base de datos :p
         """
         session = self.connection.session()
         events_db = EventDB(

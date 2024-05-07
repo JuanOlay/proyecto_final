@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from main import app
 from core import Event
 import json
+from datetime import date, datetime
 
 client = TestClient(app)
 
@@ -20,12 +21,12 @@ class TestApp(unittest.TestCase):
 
     def test_save_event(self):
         event = Event(
-            day = "2022-01-01",
+            day = date.fromisoformat("2022-01-01"),
             type_of_event = "Work",
             name = "Meeting",
             notif_bool = True,
             email_adresses_list = ["test1@gmail.com", "test2@gmail.com"],
-            notif_time = "2022-01-01T10:00:00"
+            notif_time = datetime.fromisoformat("2022-01-01T10:00:00")
         )
         json_event = json.dumps(event.to_json())
         response = client.post("/user/save_event", json = json_event)

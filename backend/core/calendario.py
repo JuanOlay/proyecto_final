@@ -6,8 +6,11 @@ Author: Juan Felipe Guevara Olaya <> Junquito <>
 from typing import List
 from datetime import date, datetime 
 import calendar
-from .events import Event , EventDB
+from events import Event , EventDB
+import sys
+sys.path.append('c:/Users/felipe guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/backend')
 from db_connection import PostgresConnection
+import json
 
 class Calendar():
     """This class represents a calendar"""
@@ -50,28 +53,28 @@ class Calendar():
             return calendar.calendar(age, 2, 2, 2)
 
     @classmethod
-    def show_by_type(cls, type_of_event):
+    def show_by_type(cls, type_of_event: str):
         """
-        This method is used to show the dates by type.
 
         Args:
-            type (str): type of the dates.
-        
         Returns:
-            A the list of dates by type.
         """
+        events_by_type = []  # Lista para acumular eventos que coinciden con el tipo
+        for json_event in cls.events:
+            if isinstance(json_event, dict) and json_event.get("type_of_event") == type_of_event:
+                events_by_type.append(json_event)
+        return events_by_type
 
-        return [event for event in cls.events if event.type_of_event == type_of_event]
 
     @classmethod
-    def add_events(cls,  event: Event):
+    def add_events(cls,  json_event: dict):
         """
         This  method adds a event to list of events.
 
         Args:
             event (Event): event object to add
         """
-        cls.events.append(event)
+        cls.events.append(json_event)
 
 
     #osea si aja pero para queeeee
@@ -95,14 +98,16 @@ class Calendar():
         """
 
         for i in range(len(cls.events)):
-            if cls.events[i].name == name:
-                cls.events[i].day = day
-                cls.events[i].type_of_event = type_of_event
-                cls.events[i].notif_bool = notif_bool
-                cls.events[i].eail_adresses_list = email_adresses_list
-                cls.events[i].notif_time = notif_time
+            if isinstance(cls.events[i], dict) and cls.events[i]["name"] == name:
+                cls.events[i]["day"] = day
+                cls.events[i]["type_of_event"] = type_of_event
+                cls.events[i]["notif_bool"] = notif_bool
+                cls.events[i]["email_adresses_list"] = email_adresses_list
+                cls.events[i]["notif_time"] = notif_time
                 break
-
+            elif i == len(cls.events) - 1:
+                print("No se encontro el evento")
+                break
 
 
     @classmethod
@@ -119,4 +124,24 @@ class Calendar():
         for event in cls.events:
             if event.name == name:
                 return event
+        return None
+    
+    @classmethod
+    def delete_event(cls, name: str):
+        """
+        This method deletes a date from the list based on its name.
+        
+        Args:
+            name(str) : identifier of date
+        """
+        for i in range(len(cls.events)):
+            if isinstance(cls.events[i], dict) and cls.events[i]["name"] == name:
+                del cls.events[i]
+                print("Se borro el evento de forma correcta")
+                break
+            elif i == len(cls.events) - 1:
+                print("No se encontro el evento")
+                break
+            else:
+                continue
         return None

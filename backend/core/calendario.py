@@ -55,9 +55,13 @@ class Calendar():
     @classmethod
     def show_by_type(cls, type_of_event: str):
         """
+        This method is used to display events by type.
 
         Args:
+            type_of_event (str): Type of events.
+    
         Returns:
+            A list of events by type.
         """
         events_by_type = []  # Lista para acumular eventos que coinciden con el tipo
         for json_event in cls.events:
@@ -122,7 +126,7 @@ class Calendar():
         event(Event) : event coincid of the name imput
         """
         for event in cls.events:
-            if event.name == name:
+            if isinstance(event, dict) and event["name"] == name:
                 return event
         return None
     

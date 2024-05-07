@@ -16,13 +16,14 @@ def login(credentials: dict):
     Args:
         credentials (dict): gmail and password of the user
     """
-    return User.login(credentials["gmail"], credentials["password"])
+    return User.login(credentials["gmail"], credentials["password"], credentials["grants"])
 
 
 @app.post("/user/save_event")
 def save_event(event: Event):
     """This service lets add a new event"""
-    Calendar.add_events(Event)
+    json_event = event.to_json()
+    Calendar.add_events(json_event)
 
 @app.put("/user/update_event/{name}")
 def update_events(name: str, day : date, type_of_event : str,

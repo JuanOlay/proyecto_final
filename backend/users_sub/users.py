@@ -12,7 +12,7 @@ class User(BaseModel):
     grants : dict
 
     @staticmethod
-    def login(gmail: str, password: str):
+    def login(gmail: str, password: str, grants : dict):
         """
         This method is used to login into the application.
 
@@ -20,7 +20,7 @@ class User(BaseModel):
             gmail (str): the gmail of the user
             password (str): the password of the user
         """
-        return User(gmail="felipe.guevara.o.1211@gmail.com", password="Password" ,)
+        return User(gmail="felipe.guevara.o.1211@gmail.com", password="Password" , grants={"access" : True})
 
     def can_access_calendar(self, calendar: Calendar , grants = {"access" : True}):
         """

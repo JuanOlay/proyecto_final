@@ -21,11 +21,31 @@ class Event(BaseModel):
     email_adresses_list : List
     notif_time : datetime
 
-    def __init__(self):
-        self.connection = PostgresConnection(
-            "felipe.guevara.o.1211@gmail.com", "Password", "localhost", 5432, "Calendario_para_proyecto_final"
-        )
+    def __init__(self, day : date, type_of_event : str, name : str, notif_bool : bool, email_adresses_list : List, notif_time : datetime):
+        """
+        This method is used to initialize the class.
 
+        Args:
+            day (date): the date of the event
+            type_of_event (str): the type of the event
+            name (str): the name of the event
+            notif_bool (bool): a boolean value indicating whether a notification for the event is enabled or not
+            email_adresses_list (List): a list of email addresses for the event notifications
+            notif_time (datetime): the date and time when the notification for the event should be sent
+        """
+        super().__init__(day=day, type_of_event=type_of_event, name=name, notif_bool=notif_bool, email_adresses_list=email_adresses_list, notif_time=notif_time)
+
+    def to_json(self):
+        # Convierte el objeto a un diccionario que puede ser serializado a JSON
+        return {
+            "day": self.day.isoformat(),
+            "type_of_event": self.type_of_event,
+            "name": self.name,
+            "notif_bool": self.notif_bool,
+            "email_adresses_list": self.email_adresses_list,
+            "notif_time": self.notif_time.isoformat()
+        }
+    
     def add_to_db(self):
         """
         ni idea de para que es esta funcion pero se ve bonita ahi

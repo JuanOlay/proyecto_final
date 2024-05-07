@@ -66,10 +66,10 @@ class Calendar():
     @classmethod
     def add_events(cls,  event: Event):
         """
-        This  method adds a date to list of dates.
+        This  method adds a event to list of events.
 
         Args:
-            date (Date): date object to add
+            event (Event): event object to add
         """
         cls.events.append(event)
 

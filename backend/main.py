@@ -8,6 +8,10 @@ from datetime import date, datetime
 
 app = FastAPI()
 
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
+
 @app.post("/login", response_model=User)
 def login(credentials: dict):
     """
@@ -17,6 +21,11 @@ def login(credentials: dict):
         credentials (dict): gmail and password of the user
     """
     return User.login(credentials["gmail"], credentials["password"], credentials["grants"])
+
+@app.get("/view_events")
+def view_events():
+    """This service lets view all events"""
+    return Calendar.events
 
 
 @app.post("/user/save_event")

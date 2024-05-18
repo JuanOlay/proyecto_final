@@ -1,6 +1,5 @@
-psycopg2-binary
-fastapi
-sqlalchemy
 pydantic
-pydantic-settings
+datetime
+fastapi
+sqlalchemy 
 uvicorn

@@ -37,3 +37,5 @@ print(calendario_prueba.show_events())
 print(calendario_prueba.delete_event("Meeting3"))
 print(calendario_prueba.get_event("Meeting2"))
 
+print(Calendar.show_calendar_by_month(2000 , 1))
+

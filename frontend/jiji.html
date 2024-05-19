@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendario Interactivo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      list-style: none;
+      padding: 0;
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .day-name {
+      text-align: center;
+      font-weight: bold;
+      padding: 10px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .day {
+      text-align: center;
+      padding: 10px;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .holiday {
+      background-color: #ffcccc;
+      font-weight: bold;
+    }
+
+    .day:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Información adicional al pasar el cursor */
+    .day-info {
+      display: none;
+      font-size: 14px;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .day:hover .day-info {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="calendar">
+    <div class="day-name">Lun</div>
+    <div class="day-name">Mar</div>
+    <div class="day-name">Mié</div>
+    <div class="day-name">Jue</div>
+    <div class="day-name">Vie</div>
+    <div class="day-name">Sáb</div>
+    <div class="day-name">Dom</div>
+    <div class="day"></div>
+    <div class="day"></div>
+    <!-- ... Resto de los días -->
+    <div class="day holiday">
+      1
+      <div class="day-info">
+        Año Nuevo
+      </div>
+    </div>
+    <div class="day">2</div>
+    <!-- ... Resto de los días -->
+    <div class="day">
+      31
+      <div class="day-info">
+        Último día del mes
+      </div>
+    </div>
+  </div>
+</body>
+</html>

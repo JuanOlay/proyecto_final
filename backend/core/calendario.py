@@ -52,6 +52,15 @@ class Calendar():
         if age > 1900 and age < 2100:
             return calendar.calendar(age, 2, 2, 2)
 
+    def show_calendar_by_month(year : int , month: int):
+        """
+        This method is used to show a calendar of the month.
+
+        Returns:
+            calendar with the function .month of the month imput.
+        """
+        return calendar.monthcalendar(year , month)
+
     @classmethod
     def show_by_type(cls, type_of_event: str):
         """

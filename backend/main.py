@@ -1,5 +1,6 @@
 """This file  has theentry point implementtion for RESTapi services."""
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from users_sub import User
 from core import Calendar, Event
 from typing import List
@@ -8,9 +9,23 @@ from datetime import date, datetime
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todas las orígenes
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos
+    allow_headers=["*"],  # Permite todos los encabezados
+)
+
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
+
+@app.get("/calendar/by_month/{year}/{month}")
+def get_calendar_by_month(year : int ,month: int):
+    """This service lets get the calendar by month"""
+    flattened_calendar = [day if day != 0 else '-' for week in Calendar.show_calendar_by_month(year , month) for day in week]
+    return flattened_calendar
 
 @app.post("/login", response_model=User)
 def login(credentials: dict):

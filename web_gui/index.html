@@ -4,11 +4,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+
+        .month-display {
+            font-size: 1.5em;
+            text-align: center;
+            margin: 10px 0;
+        }   
+
+        .calendar {
+           border-collapse: collapse;
+            width: 100%;
+        }
+
+        .day-name {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+        td, th {
+            border: 1px solid hsl(0, 0%, 80%);
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            height: 100px;
+        }
+
+        .event-day {
+            background-color: bisque;
+        }
+
+        .event-info {
+            display: none;
+            position: absolute;
+            top: 100%; /* Posiciona el desplegable debajo de la celda */
+            left: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 1000;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px; /* Bordes redondeados */
+            transition: all 0.3s ease; /* Transición suave */
+        }
+
+/* Estilos para el texto dentro del desplegable */
+        .event-info p {
+            margin: 0;
+            padding: 5px;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #333;
+        }
+
+/* Estilos para el título del evento */
+        .event-info h4 {
+            margin: 0 0 10px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+            color: #4CAF50; /* Color del tema */
+}
+
+
+        .event-day:hover .event-info {
+            display: block;
+        }
+
+        .calendar-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .control-button-plus {
+            position: fixed;
+            bottom: 20px; 
+            right: 20px;
+            z-index: 1000;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+        }
+
+        .control-button-minus {
+            position: fixed;    
+            bottom: 20px; 
+            left: 20px;
+            z-index: 1000;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+        }
+
+        .control-button:hover {
+            background-color: #45a049;
+        }
+
+        .calendar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .navigation2 {
+            flex : 1;
+        }
+
+        .navigation2:hover {
+            opacity: 1;
+        }
+
+        #prev-month{
+            margin-left: 10px;
+            position: fixed;
+            left: 20px;
+            top: 40px; 
+
+        }
+
+        #next-month{
+            margin-right: 10px;
+            position: fixed;
+            left: 290px;
+            top: 40px;
+        }
+
+        #year-selector {
+            position: fixed;
+            left: 205px;
+            top: 40px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #month-selector {
+            position:fixed;
+            left: 75px;
+            top: 40px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #current-month {
+            flex: 1; /* Ocupa 1/3 del espacio disponible */
+            text-align: center; /* Centra el texto dentro del elemento */
+        }
+
+/* Estilos adicionales para los botones y selectores */
+        button, select {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover, select:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+/* Asegúrate de que el resto de tus estilos estén aquí también */
+
+        .filtro {
+            flex: 1; /* Ocupa 1/3 del espacio disponible */
+            display: flex;
+            justify-content: flex-end; /* Alinea los elementos a la derecha */
+            gap: 10px; /* Espacio entre los elementos */
+        }
+
+        .image-button {
+            background: none;
+            border: none;
+            cursor: pointer; 
+        }
+
+        .image-button img {
+            width: 50px; /* O el tamaño que prefieras */
+            height: auto;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+
+    </style>
 </head>
 <body>
     <div class="calendar-container">
         <div class="navigation">
+            <div class = "navigation2">
             <button id="prev-month">❮</button>
             <select id="month-selector">
                 <option value="1">Enero</option>
@@ -31,7 +275,14 @@
                 <!-- Add more years as needed -->
             </select>
             <button id="next-month">❯</button>
-            <div id="current-month" class="month-display">Mes 2024</div>
+            </div>
+           <div id="current-month" class="month-display">Mes 2024</div>
+           <button id="image-button" class="image-button">
+            <img src="images/events_logo_button.png" alt="Descripción" />
+            </button>
+           <div id="filtro" class="filtro">
+            <input type="text" id="filtro" placeholder="Filtrar por evento">
+            <button onclick="javascript:filtro()" class="filtro-button">Filtrar</button>
         </div>
         </div>
 
@@ -53,8 +304,8 @@
         </table>
 
         <div class="calendar-controls">
-            <button class="control-button" id="add-event">＋</button>
-            <button class="control-button" id="remove-event">－</button>
+            <button onclick="javascript:add_event()" class="control-button-plus" id="add-event">＋</button>
+            <button onclick = "javascript:delete_event()" class="control-button-minus" id="remove-event">－</button>
         </div>
     </div>
 

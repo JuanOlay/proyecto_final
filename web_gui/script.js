@@ -126,3 +126,50 @@ yearSelector.addEventListener("change", () => {
     loadCalendar(year, month);
     updateCurrentMonthText(year, month);
 });
+
+function filtro() {
+    const filterInput = document.getElementById("filter-input").value.trim().toLowerCase();
+    const filterType = document.getElementById("filter-type").value; // Puede ser 'name' o 'type_of_event'
+
+    fetch(`http://localhost:8080/calendar/show_by_type/${filterType}?filter=${filterInput}`)
+        .then(response => response.json())
+        .then(filteredEvents => {
+            createEventList(filteredEvents);
+        })
+        .catch(error => {
+            console.error('Error al filtrar los eventos:', error);
+        });
+}
+
+function createEventList(events) {
+    const eventListElement = document.getElementById("event-list");
+    eventListElement.innerHTML = ''; // Limpiar la lista existente
+
+    events.forEach(event => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `Nombre: ${event.name}, Tipo: ${event.type_of_event}, Fecha: ${event.day}`;
+        eventListElement.appendChild(listItem);
+    });
+}
+
+function delete_event(eventName) {
+    fetch(`http://localhost:8080/user/delete_event/${eventName}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Evento eliminado correctamente');
+            // Actualizar la lista de eventos
+            filtro();
+        } else {
+            alert('Error al eliminar el evento');
+        }
+    })
+    .catch(error => {
+        console.error('Error al eliminar el evento:', error);
+    });
+}
+
+function add_event() {
+    window.location.href = 'C:/Users/felipe%20guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/web_gui/add_event_form.html'; // Cambia la ruta según sea necesario
+}

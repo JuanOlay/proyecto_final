@@ -1,11 +1,19 @@
-// Obtener elementos del DOM
+/**
+ * This file contains functions to manage the calendar and events on the client-side.
+ * Authors: Juan Felipe Guevara Olaya <> Junquito <>
+ */
+
+// Get DOM elements
 const prevMonthButton = document.getElementById("prev-month");
 const nextMonthButton = document.getElementById("next-month");
 const monthSelector = document.getElementById("month-selector");
 const yearSelector = document.getElementById("year-selector");
 const currentMonthElement = document.getElementById("current-month");
 
-// Función para obtener la fecha actual
+/**
+ * Gets the current date.
+ * @returns {Object} An object containing the current year and month.
+ */
 function getCurrentDate() {
     const currentDate = new Date();
     return {
@@ -14,13 +22,20 @@ function getCurrentDate() {
     };
 }
 
-// Función para actualizar el texto del mes y año actual
+/**
+ * Updates the text displaying the current month and year.
+ * @param {number} year - The year.
+ * @param {number} month - The month.
+ */
 function updateCurrentMonthText(year, month) {
     const monthName = new Date(year, month - 1, 1).toLocaleString('es', { month: 'long' }).toUpperCase();
     currentMonthElement.textContent = `${monthName} ${year}`;
 }
 
-// Función para cargar eventos desde el servidor
+/**
+ * Loads events from the server.
+ * @returns {Promise<Array>} A promise resolving to an array of events.
+ */
 function loadEvents() {
     return fetch('http://localhost:8080/view_events')
         .then(response => response.json())
@@ -31,7 +46,11 @@ function loadEvents() {
         });
 }
 
-// Función para cargar el calendario del mes especificado con eventos
+/**
+ * Loads the calendar for the specified month with events.
+ * @param {number} year - The year.
+ * @param {number} month - The month.
+ */
 function loadCalendar(year, month) {
     fetch(`http://localhost:8080/calendar/by_month/${year}/${month}`)
         .then(response => response.json())
@@ -46,7 +65,13 @@ function loadCalendar(year, month) {
         });
 }
 
-// Función para procesar y estructurar los datos del calendario con eventos
+/**
+ * Processes and structures calendar data with events.
+ * @param {Array} data - Array containing calendar data.
+ * @param {Array} events - Array containing event data.
+ * @param {number} year - The year.
+ * @param {number} month - The month.
+ */
 function createCalendar(data, events, year, month) {
     const calendarioElement = document.getElementById("calendar-body");
     calendarioElement.innerHTML = ''; // Limpiar el contenido existente
@@ -83,12 +108,12 @@ function createCalendar(data, events, year, month) {
     }
 }
 
-// Obtener la fecha actual
+// Get current date, update UI, and load calendar
 const currentDate = getCurrentDate();
 updateCurrentMonthText(currentDate.year, currentDate.month);
 loadCalendar(currentDate.year, currentDate.month);
 
-// Event listeners para los botones de navegación y selectores
+// Event listeners for navigation buttons and selectors
 prevMonthButton.addEventListener("click", () => {
     let year = parseInt(yearSelector.value);
     let month = parseInt(monthSelector.value) - 1;
@@ -127,6 +152,9 @@ yearSelector.addEventListener("change", () => {
     updateCurrentMonthText(year, month);
 });
 
+/**
+ * Filters events based on user input.
+ */
 function filtro() {
     const filterInput = document.getElementById("filter-input").value.trim().toLowerCase();
     const filterType = document.getElementById("filter-type").value; // Puede ser 'name' o 'type_of_event'
@@ -141,6 +169,10 @@ function filtro() {
         });
 }
 
+/**
+ * Creates a list of events.
+ * @param {Array} events - Array containing event data.
+ */
 function createEventList(events) {
     const eventListElement = document.getElementById("event-list");
     eventListElement.innerHTML = ''; // Limpiar la lista existente
@@ -152,6 +184,10 @@ function createEventList(events) {
     });
 }
 
+/**
+ * Deletes an event.
+ * @param {string} eventName - The name of the event to delete.
+ */
 function delete_event(eventName) {
     fetch(`http://localhost:8080/user/delete_event/${eventName}`, {
         method: 'DELETE'
@@ -170,6 +206,9 @@ function delete_event(eventName) {
     });
 }
 
+/**
+ * Navigates to the add event page.
+ */
 function add_event() {
     window.location.href = 'C:/Users/felipe%20guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/web_gui/add_event_form.html'; // Cambia la ruta según sea necesario
 }

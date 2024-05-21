@@ -1,20 +1,23 @@
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('day').addEventListener('input', updatePreview);
-    document.getElementById('type_of_event').addEventListener('input', updatePreview);
-    document.getElementById('name').addEventListener('input', updatePreview);
-    document.getElementById('notif_bool').addEventListener('change', updatePreview);
-    document.getElementById('notif_time').addEventListener('input', updatePreview);
-    document.getElementById('agregarCorreo').addEventListener('click', addEmail);
-});
+/**
+ * This file contains functions to manage event data on the client-side.
+ * Authors: Juan Felipe Guevara Olaya <> Junquito <>
+ */
 
+/**
+ * Updates the event preview elements based on user input.
+ */
 function updatePreview() {
+    // Updates preview elements with input values
     document.getElementById('namePreview').textContent = document.getElementById('name').value;
     document.getElementById('typePreview').textContent = document.getElementById('type_of_event').value;
     document.getElementById('dayPreview').textContent = document.getElementById('day').value;
-    document.getElementById('notifPreview').textContent = document.getElementById('notif_bool').checked ? 'Sí' : 'No';
+    document.getElementById('notifPreview').textContent = document.getElementById('notif_bool').checked ? 'Yes' : 'No';
     document.getElementById('timePreview').textContent = document.getElementById('notif_time').value;
 }
 
+/**
+ * Adds an email address to the list of event notifications.
+ */
 function addEmail() {
     const emailInput = document.getElementById('correo');
     const email = emailInput.value;
@@ -29,7 +32,11 @@ function addEmail() {
     }
 }
 
+/**
+ * Sends the event data to the server to save.
+ */
 function save_event() {
+    // Constructs the event object from input values
     const event = {
         name: document.getElementById('name').value,
         type_of_event: document.getElementById('type_of_event').value,
@@ -39,6 +46,7 @@ function save_event() {
         email_adresses_list: Array.from(document.getElementById('emailsList').children).map(li => li.textContent)
     };
 
+    // Sends the event object to the server for saving
     fetch('http://localhost:8080/user/save_event', {
         method: 'POST',
         headers: {
@@ -54,19 +62,22 @@ function save_event() {
     })
     .then(data => {
         if (data && data.success) {
-            alert('Evento guardado exitosamente');
+            alert('Event saved successfully');
             clearPreview();
             document.getElementById('add-event-form').reset();
         } else {
-            alert('Hubo un error al guardar el evento');
+            alert('Error saving event');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Hubo un error al guardar el evento');
+        alert('Error saving event');
     });
 }
 
+/**
+ * Clears the event preview elements.
+ */
 function clearPreview() {
     document.getElementById('namePreview').textContent = '';
     document.getElementById('typePreview').textContent = '';

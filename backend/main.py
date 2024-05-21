@@ -3,6 +3,7 @@ from typing import List
 from datetime import date, datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+# pylint: disable=E0401
 from users_sub import User
 from core import Calendar, Event
 

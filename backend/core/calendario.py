@@ -5,15 +5,12 @@ Author: Juan Felipe Guevara Olaya <> Junquito <>
 """
 # pylint: disable=wrong-import-position
 from .events import Event , EventDB
+# pylint: disable=E0401
 # pylint: disable=wrong-import-position
 from db_connection import PostgresConnection
-# pylint: disable=wrong-import-position
 from typing import List
-# pylint: disable=wrong-import-position
 from datetime import date, datetime
-# pylint: disable=wrong-import-position
 import calendar
-# pylint: disable=wrong-import-position
 import sys
 sys.path.append('c:/Users/felipe guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/backend')
 

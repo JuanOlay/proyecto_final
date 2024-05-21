@@ -3,14 +3,20 @@ This file contains the classes and methods to manage the calendar of the applica
 
 Author: Juan Felipe Guevara Olaya <> Junquito <>
 """
-from typing import List
-from datetime import date, datetime 
-import calendar
+# pylint: disable=wrong-import-position
 from .events import Event , EventDB
+# pylint: disable=wrong-import-position
+from db_connection import PostgresConnection
+# pylint: disable=wrong-import-position
+from typing import List
+# pylint: disable=wrong-import-position
+from datetime import date, datetime
+# pylint: disable=wrong-import-position
+import calendar
+# pylint: disable=wrong-import-position
 import sys
 sys.path.append('c:/Users/felipe guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/backend')
-from db_connection import PostgresConnection
-import json
+
 
 class Calendar():
     """This class represents a calendar"""
@@ -27,7 +33,13 @@ class Calendar():
         """
         if len(cls.events) == 0:
             list_events = []
-            connection = PostgresConnection("felipe.guevara.o.1211@gmail.com", "Password", "localhost", 5432, "Calendario_para_proyecto_final")      
+            connection = PostgresConnection(
+                "felipe.guevara.o.1211@gmail.com",
+                "Password",
+                "localhost",
+                5432,
+                "Calendario_para_proyecto_final"
+                )
             for event_db in connection.session.query(EventDB).all():
                 event_obj = Event(
                     day = event_db.day,
@@ -40,7 +52,7 @@ class Calendar():
                 list_events.append(event_obj)
             cls.events = list_events
         return cls.events
-    
+
     @classmethod
     def show_calendar(cls, age: int):
         """
@@ -52,6 +64,7 @@ class Calendar():
         if age > 1900 and age < 2100:
             return calendar.calendar(age, 2, 2, 2)
 
+    # pylint: disable=E0213
     def show_calendar_by_month(year : int , month: int):
         """
         This method is used to show a calendar of the month.
@@ -109,7 +122,7 @@ class Calendar():
             email_adresses_list(List) : List of emails that will be notified
             notif_time(datetime) : exact time of notification 
         """
-
+        # pylint: disable=C0200
         for i in range(len(cls.events)):
             if isinstance(cls.events[i], dict) and cls.events[i]["name"] == name:
                 cls.events[i]["day"] = day
@@ -138,7 +151,7 @@ class Calendar():
             if isinstance(event, dict) and event["name"] == name:
                 return event
         return None
-    
+
     @classmethod
     def delete_event(cls, name: str):
         """
@@ -147,6 +160,7 @@ class Calendar():
         Args:
             name(str) : identifier of date
         """
+        # pylint: disable=C0200
         for i in range(len(cls.events)):
             if isinstance(cls.events[i], dict) and cls.events[i]["name"] == name:
                 del cls.events[i]

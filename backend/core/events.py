@@ -1,18 +1,17 @@
 """
 
-This file contains the classes and methods to manage the dates of the application.
+This file contains the classes and methods to manage the events of the application.
 Author: Juan Felipe Guevara Olaya <> Junquito <>
 
 """
-from datetime import date, datetime 
-from pydantic import BaseModel
+from datetime import date, datetime
 from typing import List
+from pydantic import BaseModel
 from sqlalchemy import Column, String, Date, Boolean, DateTime
 from sqlalchemy.orm import declarative_base
 
 class Event(BaseModel):
-    """This class represents the behavior of a date"""
-    
+    """This class represents the behavior of a event"""
     day : date
     type_of_event : str
     name : str
@@ -20,7 +19,15 @@ class Event(BaseModel):
     email_adresses_list : List
     notif_time : datetime
 
-    def __init__(self, day : date, type_of_event : str, name : str, notif_bool : bool, email_adresses_list : List, notif_time : datetime):
+    def __init__(
+            self,
+            day : date,
+            type_of_event : str,
+            name : str,
+            notif_bool : bool,
+            email_adresses_list : List,
+            notif_time : datetime
+            ):
         """
         This method is used to initialize the class.
 
@@ -28,14 +35,26 @@ class Event(BaseModel):
             day (date): the date of the event
             type_of_event (str): the type of the event
             name (str): the name of the event
-            notif_bool (bool): a boolean value indicating whether a notification for the event is enabled or not
+            notif_bool (bool): a boolean value indicating whether a notification 
+            for the event is enabled or not
             email_adresses_list (List): a list of email addresses for the event notifications
-            notif_time (datetime): the date and time when the notification for the event should be sent
+            notif_time (datetime): the date and time when the notification for
+            the event should be sent
         """
-        super().__init__(day = day, type_of_event = type_of_event, name = name, notif_bool = notif_bool, email_adresses_list = email_adresses_list, notif_time = notif_time)
+        super().__init__(
+            day = day,
+            type_of_event = type_of_event,
+            name = name,
+            notif_bool = notif_bool,
+            email_adresses_list = email_adresses_list,
+            notif_time = notif_time
+            )
 
     def to_json(self):
-        # Convierte el objeto a un diccionario que puede ser serializado a JSON
+        """
+        This methos is used to convert the class to a JSON object.
+        """
+
         return {
             "day": self.day.isoformat(),
             "type_of_event": self.type_of_event,
@@ -44,7 +63,7 @@ class Event(BaseModel):
             "email_adresses_list": self.email_adresses_list,
             "notif_time": self.notif_time.isoformat()
         }
-    
+
 
     def add_to_db(self):
         """
@@ -52,6 +71,7 @@ class Event(BaseModel):
 
         creo que es para añadirlo a la base de datos :p
         """
+        # pylint: disable=unused-variable
         session = self.connection.session()
         events_db = EventDB(
             day = self.day,
@@ -67,6 +87,9 @@ class Event(BaseModel):
         self.session.close()
 
     class Config:
+        """
+        This class is used to configure the behavior of the class.
+        """
         from_attributes = True
 
 Base = declarative_base()

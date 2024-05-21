@@ -50,10 +50,10 @@ def save_event(event: Event):
     Calendar.add_events(json_event)
 
 @app.put("/user/update_event/{name}")
-def update_events(name: str, day : date, type_of_event : str,
+def update_events(day : date, type_of_event : str,
         notif_bool : bool, email_adresses_list : List, notif_time : datetime
         ): 
-    Calendar.update_event(name, day, type_of_event,
+    Calendar.update_event(day, type_of_event,
         notif_bool, email_adresses_list, notif_time)
 
 """

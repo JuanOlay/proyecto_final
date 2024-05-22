@@ -1,3 +1,4 @@
+"""This file contains the URL patterns for the calendar_event app."""
 from django.urls import path
 from . import views
 

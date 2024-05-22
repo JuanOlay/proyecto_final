@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6p&&do14mfr077j^84(v8pqm2zbr(lyy(k%=qy==a+bn_4#^1g'
+SECRET_KEY = 'django-insecure-l%t(u_80n)vbt7z71k1x7)@r99+r@yr)i2+@svb0zi*1e5a)w7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ["127:0.0.1", "localhost"]
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "calendar_events.apps.CalendarEventsConfig",
+    'calendar_event.apps.CalendarEventConfig',
 ]
 
 MIDDLEWARE = [

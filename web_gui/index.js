@@ -74,10 +74,10 @@ function loadCalendar(year, month) {
  */
 function createCalendar(data, events, year, month) {
     const calendarioElement = document.getElementById("calendar-body");
-    calendarioElement.innerHTML = ''; // Limpiar el contenido existente
+    calendarioElement.innerHTML = ''; // Clear existing content
 
-    const daysInWeek = 7; // Número de días en una semana
-    const weeks = Math.ceil(data.length / daysInWeek); // Calcular el número de semanas
+    const daysInWeek = 7;
+    const weeks = Math.ceil(data.length / daysInWeek);
 
     for (let i = 0; i < weeks; i++) {
         const weekRow = document.createElement('tr');
@@ -85,20 +85,19 @@ function createCalendar(data, events, year, month) {
         for (let j = i * daysInWeek; j < (i + 1) * daysInWeek; j++) {
             const day = data[j];
             const cell = document.createElement('td');
-            cell.textContent = day !== '-' ? day : '';  // Mostrar día o dejar vacío
+            cell.textContent = day !== '-' ? day : '';
 
-            // Verificar si hay un evento en este día
+            // Check if there are events on this day
             if (day !== '-') {
                 const currentDate = new Date(year, month - 1, day).toISOString().split('T')[0];
-                const event = events.find(event => new Date(event.day).toISOString().split('T')[0] === currentDate);
+                const dayEvents = events.filter(event => new Date(event.day).toISOString().split('T')[0] === currentDate);
 
-                if (event) {
-                    cell.classList.add('event-day');  // Añadir clase CSS si hay un evento
-                    const eventInfo = document.createElement('div');
-                    eventInfo.classList.add('event-info');
-                    eventInfo.textContent = `Evento: ${event.name}, Tipo: ${event.type_of_event}`;
-                    cell.appendChild(eventInfo);
-                }
+                if (dayEvents.length > 0) {
+                    const eventDetails = dayEvents.map(event => `Nombre: ${event.name}, Tipo: ${event.type_of_event}`).join('\n');
+                    cell.classList.add('event-day'); // Add CSS class if there are events
+                    cell.title = eventDetails; // Utilizamos el atributo title para mostrar los detalles al pasar el ratón
+                    cell.textContent += ` (${dayEvents.length})`; // Mostramos el conteo de eventos
+                }                
             }
 
             weekRow.appendChild(cell);

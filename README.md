@@ -1,2 +1,2 @@
-# proyecto_final
- proyecto final programacion avanzada :p
+# Final_Project
+Final project repository

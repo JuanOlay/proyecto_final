@@ -55,6 +55,7 @@ document.getElementById("deleteEventForm").onsubmit = function(event) {
     hideDeleteModal();
 }
 
+
 /**
  * Handles the delete event form submission.
  * @param {Event} event - The form submission event.
@@ -302,3 +303,5 @@ deleteEventButton.addEventListener("click", showDeleteModal);
 function add_event() {
     window.location.href = 'C:/Users/felipe%20guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/code/web_gui/add_event_form.html';
 }
+
+//nuevooooooooo

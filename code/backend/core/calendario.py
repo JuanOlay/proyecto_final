@@ -3,17 +3,18 @@ This file contains the classes and methods to manage the calendar of the applica
 
 Author: Juan Felipe Guevara Olaya <> Junquito <>
 """
-# pylint: disable=wrong-import-position
-from .events import Event , EventDB
+# pylint: disable=wrong-import-order
+from .events import Event, EventDB, send_notification_email
+import time
+import pytz
 # pylint: disable=E0401
-# pylint: disable=wrong-import-position
 from db_connection import PostgresConnection
-from typing import List
-from datetime import date, datetime
+from datetime import datetime
 import calendar
 import sys
-sys.path.append('c:/Users/felipe guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/code/backend')
-
+sys.path.append(
+    'c:/Users/felipe guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/code/backend'
+    )
 
 class Calendar():
     """This class represents a calendar"""
@@ -98,39 +99,19 @@ class Calendar():
             event (Event): event object to add
         """
         cls.events.append(json_event)
-
-
-    #osea si aja pero para queeeee
-
-
-    @classmethod
-    def update_event(
-        cls, name: str, day : date, type_of_event : str,
-        notif_bool : bool, email_adresses_list : List, notif_time : datetime
-        ):
-        """
-        This method updates a date in the list based on its code.
-        
-        Args:
-            name(str) : identifier of date
-            day(date) : date of event
-            type_of_event(str) : type of event
-            notif_bool(bool) : will you be notified of the event?
-            email_adresses_list(List) : List of emails that will be notified
-            notif_time(datetime) : exact time of notification 
-        """
-        # pylint: disable=C0200
-        for i in range(len(cls.events)):
-            if isinstance(cls.events[i], dict) and cls.events[i]["name"] == name:
-                cls.events[i]["day"] = day
-                cls.events[i]["type_of_event"] = type_of_event
-                cls.events[i]["notif_bool"] = notif_bool
-                cls.events[i]["email_adresses_list"] = email_adresses_list
-                cls.events[i]["notif_time"] = notif_time
-                break
-            elif i == len(cls.events) - 1:
-                print("No se encontro el evento")
-                break
+        timezone = pytz.timezone("America/Bogota")
+        desired_datetime = datetime.strptime(json_event['notif_time'], '%Y-%m-%dT%H:%M:%S')
+        desired_datetime = timezone.localize(desired_datetime)
+        now = datetime.now(timezone)
+        time_until_send = (desired_datetime - now).total_seconds()
+        if time_until_send > 0:
+            # pylint: disable=line-too-long
+            print(f"Correo programado para enviarse en {time_until_send} segundos ({json_event['notif_time']})."
+                )
+            time.sleep(time_until_send)
+            send_notification_email(json_event)
+        else:
+            print(f"La fecha y hora deseadas ({json_event['notif_time']}) ya han pasado.")
 
 
     @classmethod

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
-    <link rel="stylesheet" href="{% static 'styles_index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles_index.css' %}">
 </head>
 <body>
     <div class="calendar-container">
@@ -33,9 +33,9 @@
                 <button id="next-month">❯</button>
             </div>
             <div id="current-month" class="month-display">Mes 2024</div>
-            <a href="calendar_events.html" class="display-area">
+            <a href="{% url 'calendar_events' %}" class="display-area">
             <button id="image-button" class="image-button">
-                <img src="images/events_logo_button.png" alt="Descripción" />
+                <img src="{% static 'images/events_logo_button.png' %}" alt="Descripción" />
             </button>
         </a>
         </div>
@@ -57,7 +57,9 @@
         </table>
 
         <div class="calendar-controls">
-            <button onclick="javascript:add_event()" class="control-button-plus" id="add-event">Añadir evento ＋</button>
+            <a href="{% url 'add_event_form' %}">
+            <button class="control-button-plus" id="add-event">Añadir evento ＋</button>
+        </a>
             <button onclick="javascript:showDeleteModal()" class="control-button-minus" id="remove-event">Eliminar evento －</button>
         </div>
 
@@ -73,44 +75,8 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Function to show the delete event modal
-        function showDeleteModal() {
-            var modal = document.getElementById("deleteEventModal");
-            modal.style.display = "block";
-        }
-
-        // Function to hide the delete event modal
-        function hideDeleteModal() {
-            var modal = document.getElementById("deleteEventModal");
-            modal.style.display = "none";
-        }
-
-        // Close modal when clicking on the close button
-        document.querySelector('.modal .close').onclick = function() {
-            hideDeleteModal();
-        }
-
-        // Close modal when clicking outside of the modal content
-        window.onclick = function(event) {
-            var modal = document.getElementById("deleteEventModal");
-            if (event.target == modal) {
-                hideDeleteModal();
-            }
-        }
-
-        // Handle form submission for deleting an event
-        document.getElementById("deleteEventForm").onsubmit = function(event) {
-            event.preventDefault();
-            var eventName = document.getElementById("eventName").value;
-            // Add your logic here to delete the event
-            console.log("Evento a eliminar: " + eventName);
-            hideDeleteModal();
-        }
-    </script>
     
-    <script src={% static 'index.js' %}></script>
+    <script src="{% static 'js/index.js' %}"></script>
     <footer>
         <p>&copy; 2024 Calendar for project UD</p>
     </footer>  

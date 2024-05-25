@@ -1,3 +1,5 @@
+{% load static %}
+
 <html lang="es">
 <head>
     <title>Form events</title>
@@ -6,7 +8,8 @@
     <meta name="description" content="Calendar for final project">
     <meta name="keywords" content="calendar, final project, Juan Guevara">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="add_event_form.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles_add_event_form.css' %}">
+    <script src="{% static 'js/add_event_form.js' %}" defer></script>
 </head>
 <body>
     <div class="form-container">
@@ -39,7 +42,7 @@
                 <br>
                 <br>
                 <button type="button" onclick="save_event()">Guardar Evento</button>
-                <a href="index.html">
+                <a href="{% url 'index' %}">
                     <button type="button">Volver</button>
                 </a>
             </div>

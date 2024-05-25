@@ -1,8 +1,11 @@
+{% load static %}
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles_calendar_events.css' %}">
 <body>
     <div class="calendar-container">
         <div class="navigation">
@@ -30,9 +33,9 @@
             <button id="next-month">❯</button>
             </div>
            <div id="current-month" class="month-display">Mes 2024</div>
-           <a href="index.html" class="navigation" >
+           <a href="{% url 'index' %}" class="navigation" >
            <button id="image-button" class="image-button">
-            <img src="images/index_logo_button.png" alt="Descripción" />
+            <img src="{% static 'images/index_logo_button.png' %}" alt="Descripción" />
             </button>
            </a>
            <div id="filtro" class="filtro">
@@ -45,9 +48,11 @@
         <div id="left-column" class="column"></div>
         <div id="right-column" class="column"></div>
     </div>
-    <script src="calendar_events.js"></script>
+    <script src="{% static 'js/calendar_events.js' %}"></script>
     <div class="calendar-controls">
-        <button onclick="javascript:add_event()" class="control-button-plus" id="add-event">＋</button>
+        <a href="{% url 'add_event_form' %}">
+        <button class="control-button-plus" id="add-event">＋</button>
+        </a>
         <button onclick = "javascript:delete_event()" class="control-button-minus" id="remove-event">－</button>
     </div>
     <footer>

@@ -1,19 +1,20 @@
-<html>
+{% load static %}
+
+<html lang="es">
     <head>
         <title>Calendar</title>
-        <meta charset = "UTF-8">
-        <meta name = "author" content = "Juan Guevara">
-        <meta name = "description" content = "Calendar for final project">
-        <meta name = "keywords" content = "calendar, final project, Juan Guevara">
-        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-        <link rel = "stylesheet" href = "styles.css">
-        <script src = "login.js"></script>
+        <meta charset="UTF-8">
+        <meta name="author" content="Juan Guevara">
+        <meta name="description" content="Calendar for final project">
+        <meta name="keywords" content="calendar, final project, Juan Guevara">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles_login.css' %}">
+        <script src="{% static 'js/login_.js' %}" defer></script>
     </head>
-    <body class="body">
+    <body>
         <header>
-            <img src = "images/Captura de pantalla_18-5-2024_235746_github.com.jpeg" width="700" height="200">
-            <br />
-            <br />
+            <img src="{% static 'images/login_logo.jpeg' %}" alt="Logo" class="header-image">
+        </header>
         <div class="login-container">
             <div class="input-field">
                 <label for="correo">Correo</label>
@@ -23,7 +24,7 @@
                 <label for="contrasena">Contraseña</label>
                 <input type="password" id="contrasena" placeholder="Ingresa tu contraseña">
             </div>
-            <button onclick = "javascript:login()" class = "login-button">Ingresar</button>
+            <button onclick="login()" class="login-button">Ingresar</button>
         </div>
     </body>
 </html>

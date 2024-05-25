@@ -69,3 +69,8 @@ def show_by_type(type_of_event: str):
 def delete_event(name: str):
     """This service lets delete an event"""
     Calendar.delete_event(name)
+
+@app.get("/calendar/show_by_name/{name}", response_model = List[Event])
+def show_by_name(name: str):
+    """This service lets show the events by name"""
+    return Calendar.get_event(name)

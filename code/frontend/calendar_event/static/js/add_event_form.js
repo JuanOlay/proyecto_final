@@ -32,6 +32,7 @@ function addEmail() {
     }
 }
 
+//replace in html function of python 
 /**
  * Sends the event data to the server to save.
  */
@@ -61,12 +62,12 @@ function save_event() {
         return response.json();
     })
     .then(data => {
-        if (data && data.success) {
+        if (data) {
             alert('Event saved successfully');
             clearPreview();
             document.getElementById('add-event-form').reset();
         } else {
-            alert('Error saving event');
+            alert('Event not saved');
         }
     })
     .catch(error => {

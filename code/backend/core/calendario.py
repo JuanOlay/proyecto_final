@@ -98,20 +98,21 @@ class Calendar():
         cls.events.append(json_event)
 
     @classmethod
-    def get_event(cls, name : str) -> Event:
+    def get_event(cls, name: str):
         """
-        This method performs a search by name
+        This method performs a search by name.
 
         Args:
-        name(str) : indentifier of the event
+            name (str): Identifier of the event.
 
         Returns:
-        event(Event) : event coincid of the name imput
+            List[Event]: List of events matching the input name.
         """
+        matching_events = []
         for event in cls.events:
-            if isinstance(event, dict) and event["name"] == name:
-                return event
-        return None
+            if isinstance(event, dict) and event.get("name") == name:
+                matching_events.append(event)
+        return matching_events
 
     @classmethod
     def delete_event(cls, name: str):

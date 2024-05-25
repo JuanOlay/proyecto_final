@@ -99,6 +99,7 @@ function updateCurrentMonthText(year, month) {
     currentMonthElement.textContent = `${monthName} ${year}`;
 }
 
+//replace in html function of python  se elimina esta funcion despues de integrar python en el html
 /**
  * Loads events from the server.
  * @returns {Promise<Array>} A promise resolving to an array of events.
@@ -113,6 +114,7 @@ function loadEvents() {
         });
 }
 
+//replace in html function of python se elimina esta funcion despues de integrar python en el html
 /**
  * Loads the calendar for the specified month with events.
  * @param {number} year - The year.
@@ -123,7 +125,7 @@ function loadCalendar(year, month) {
         .then(response => response.json())
         .then(data => {
             loadEvents().then(events => {
-                createCalendar(data, events, year, month);  // Pass the events and the year and month to the createCalendar function
+                createCalendar(data, events, year, month);
                 updateCurrentMonthText(year, month);
             });
         })
@@ -132,6 +134,7 @@ function loadCalendar(year, month) {
         });
 }
 
+//replace in html function of python 
 /**
  * Processes and structures calendar data with events.
  * @param {Array} data - Array containing calendar data.
@@ -218,6 +221,7 @@ yearSelector.addEventListener("change", () => {
     updateCurrentMonthText(year, month);
 });
 
+//replace in html function of python 
 /**
  * Creates a list of events.
  * @param {Array} events - Array containing event data.
@@ -233,6 +237,7 @@ function createEventList(events) {
     });
 }
 
+//replace in html function of python  
 /**
  * Deletes an event.
  * @param {string} eventName - The name of the event to delete.

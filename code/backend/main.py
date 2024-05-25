@@ -1,6 +1,8 @@
 """This file  has theentry point implementtion for RESTapi services."""
 # pylint: disable=wrong-import-order
 from typing import List
+# pylint: disable=import-error
+from celery_config import send_notification_email
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # pylint: disable=E0401
@@ -52,6 +54,11 @@ def save_event(event: Event):
     """This service lets add a new event"""
     json_event = event.to_json()
     Calendar.add_events(json_event)
+    send_notification_email(json_event)
+    return {
+        "message":
+        "Evento guardado y notificación por correo electrónico en cola para ser enviada."
+        }
 
 @app.get("/calendar/show_by_type/{type_of_event}", response_model = List[Event])
 def show_by_type(type_of_event: str):

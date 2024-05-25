@@ -5,6 +5,7 @@ Author: Juan Felipe Guevara Olaya <> Junquito <>
 
 """
 # pylint: disable=import-error
+# pylint: disable=wrong-import-order
 from datetime import date, datetime
 from typing import List
 from pydantic import BaseModel
@@ -126,7 +127,7 @@ class EventDB(Base):
     email_adresses_list = Column(String)
     notif_time = Column(DateTime)
 
-def send_notification_email(json_event):
+def make_notification_email(json_event):
     """
     This method sends a notification email for a given event.
     
@@ -136,7 +137,7 @@ def send_notification_email(json_event):
     if json_event.get("notif_bool", False):
         try:
             # Autenticación SMTP usando yagmail
-            yag = yagmail.SMTP('yopipe1211@gmail.com', 'password')
+            yag = yagmail.SMTP('yopipe1211@gmail.com', 'nlze inhn vuzk joco')
 
 
             # Envío de correo electrónico usando yagmail
@@ -148,5 +149,8 @@ def send_notification_email(json_event):
                 )
 
             print("Correo electrónico enviado correctamente")
+        # pylint: disable=broad-exception-caught
         except Exception as e:
             print(f"Error al enviar el correo electrónico: {str(e)}")
+    else:
+        print("No se envió el correo electrónico porque la notificación no está habilitada.")

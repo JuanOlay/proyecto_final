@@ -4,12 +4,9 @@ This file contains the classes and methods to manage the calendar of the applica
 Author: Juan Felipe Guevara Olaya <> Junquito <>
 """
 # pylint: disable=wrong-import-order
-from .events import Event, EventDB, send_notification_email
-import time
-import pytz
+from .events import Event, EventDB
 # pylint: disable=E0401
 from db_connection import PostgresConnection
-from datetime import datetime
 import calendar
 import sys
 sys.path.append(
@@ -99,20 +96,6 @@ class Calendar():
             event (Event): event object to add
         """
         cls.events.append(json_event)
-        timezone = pytz.timezone("America/Bogota")
-        desired_datetime = datetime.strptime(json_event['notif_time'], '%Y-%m-%dT%H:%M:%S')
-        desired_datetime = timezone.localize(desired_datetime)
-        now = datetime.now(timezone)
-        time_until_send = (desired_datetime - now).total_seconds()
-        if time_until_send > 0:
-            # pylint: disable=line-too-long
-            print(f"Correo programado para enviarse en {time_until_send} segundos ({json_event['notif_time']})."
-                )
-            time.sleep(time_until_send)
-            send_notification_email(json_event)
-        else:
-            print(f"La fecha y hora deseadas ({json_event['notif_time']}) ya han pasado.")
-
 
     @classmethod
     def get_event(cls, name : str) -> Event:

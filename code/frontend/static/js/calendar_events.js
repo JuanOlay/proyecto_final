@@ -2,6 +2,19 @@
 const leftColumn = document.getElementById("left-column");
 const rightColumn = document.getElementById("right-column");
 
+
+let selectedEvents = [];
+
+function handleEventSelection(event, eventName) {
+    if (event.target.checked) {
+        // Agregar evento a la lista de eventos seleccionados
+        selectedEvents.push(eventName);
+    } else {
+        // Eliminar evento de la lista de eventos seleccionados
+        selectedEvents = selectedEvents.filter(name => name !== eventName);
+    }
+}
+
 /**
  * Gets the current date.
  * @returns {Object} An object containing the current year and month.
@@ -19,15 +32,22 @@ function getCurrentDate() {
  * @returns {Promise<Array>} A promise that resolves to an array of events.
  */
 function loadEvents() {
-    return fetch('http://localhost:8080/view_events')
+    fetch('http://localhost:8080/view_events')
         .then(response => response.json())
         .then(data => {
             console.log('Loaded events:', data);
-            return data;
+            // Limpiar la lista de eventos antes de cargar
+            leftColumn.innerHTML = '';
+            rightColumn.innerHTML = '';
+            // Mostrar los eventos en la página
+            data.forEach(event => {
+                const eventBox = createEventBox(event);
+                leftColumn.appendChild(eventBox);
+            });
         })
         .catch(error => {
             console.error('Error fetching events:', error);
-            return [];
+            alert("Error al cargar los eventos");
         });
 }
 
@@ -142,85 +162,6 @@ function createEventBox(day, monthName, year, event) {
     return eventBox;
 }
 
-// Get DOM elements for navigation buttons and selectors
-const prevMonthButton = document.getElementById("prev-month");
-const nextMonthButton = document.getElementById("next-month");
-const monthSelector = document.getElementById("month-selector");
-const yearSelector = document.getElementById("year-selector");
-const currentMonthElement = document.getElementById("current-month");
-
-/**
- * Updates the text displaying the current month and year.
- * @param {number} year - The year.
- * @param {number} month - The month.
- */
-function updateCurrentMonthText(year, month) {
-    const monthName = new Date(year, month - 1, 1).toLocaleString('es', { month: 'long' }).toUpperCase();
-    currentMonthElement.textContent = `${monthName} ${year}`;
-}
-
-// Get current date, update UI, and load calendar
-updateCurrentMonthText(currentDate.year, currentDate.month);
-loadCalendar(currentDate.year, currentDate.month);
-
-// Event listeners for navigation buttons and selectors
-prevMonthButton.addEventListener("click", () => {
-let year = parseInt(yearSelector.value);
-let month = parseInt(monthSelector.value) - 1;
-if (month === 0) {
-year--;
-month = 12;
-}
-loadCalendar(year, month);
-updateCurrentMonthText(year, month);
-yearSelector.value = year;
-monthSelector.value = month;
-});
-
-nextMonthButton.addEventListener("click", () => {
-let year = parseInt(yearSelector.value);
-let month = parseInt(monthSelector.value) + 1;
-if (month === 13) {
-year++;
-month = 1;
-}
-loadCalendar(year, month);
-updateCurrentMonthText(year, month);
-yearSelector.value = year;
-monthSelector.value = month;
-});
-
-monthSelector.addEventListener("change", () => {
-    const year = parseInt(yearSelector.value);
-    const month = parseInt(monthSelector.value);
-    loadCalendar(year, month);
-    updateCurrentMonthText(year, month);
-});
-
-yearSelector.addEventListener("change", () => {
-    const year = parseInt(yearSelector.value);
-    const month = parseInt(monthSelector.value);
-    loadCalendar(year, month);
-    updateCurrentMonthText(year, month);
-});
-
-/**
- * Filters events based on user input.
- */
-function filtro() {
-    const filterInput = document.getElementById("filter-input").value.trim().toLowerCase();
-    const filterType = document.getElementById("filter-type").value; // Can be 'name' or 'type_of_event'
-
-    fetch(`http://localhost:8080/calendar/show_by_type/${filterType}?filter=${filterInput}`)
-        .then(response => response.json())
-        .then(filteredEvents => {
-            createEventList(filteredEvents);
-        })
-        .catch(error => {
-            console.error('Error filtering events:', error);
-        });
-}
-
 /**
  * Deletes an event.
  * @param {string} eventName - The name of the event to delete.
@@ -233,7 +174,7 @@ function delete_event(eventName) {
         if (response.ok) {
             alert('Event successfully deleted');
             // Update the event list
-            filtro();
+            loadEvents();
         } else {
             alert('Error deleting the event');
         }
@@ -243,9 +184,47 @@ function delete_event(eventName) {
     });
 }
 
-/**
- * Navigates to the add event page.
- */
-function add_event() {
-    window.location.href = 'C:/Users/felipe%20guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/code/web_gui/add_event_form.html'; // Adjust the path as necessary
+function deleteSelectedEvents() {
+    selectedEvents.forEach(eventName => {
+        fetch(`http://localhost:8080/user/delete_event/${eventName}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Evento eliminado correctamente");
+                // Actualizar la lista de eventos después de eliminar
+                loadEvents();
+            } else {
+                console.error("Error al eliminar evento:", response.statusText);
+                alert("Error al eliminar el evento");
+            }
+        })
+        .catch(error => {
+            console.error("Error al eliminar evento:", error);
+            alert("Error al eliminar el evento");
+        });
+    });
+
+    // Limpiar la lista de eventos seleccionados
+    selectedEvents = [];
 }
+
+// Función para crear un cuadro de evento en la página
+function createEventBox(event) {
+    const eventBox = document.createElement('div');
+    eventBox.classList.add('event-box');
+    eventBox.innerHTML = `
+        <input type="checkbox" class="event-checkbox" value="${event.name}">
+        <span class="event-name">${event.name}</span>
+    `;
+    // Manejar la selección de eventos al hacer clic en el checkbox
+    const checkbox = eventBox.querySelector('.event-checkbox');
+    checkbox.addEventListener('change', () => handleEventSelection(event, checkbox.value));
+    return eventBox;
+}
+
+// Event listener para el botón de eliminar eventos
+deleteButton.addEventListener("click", deleteSelectedEvents);

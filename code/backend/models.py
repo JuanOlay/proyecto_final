@@ -14,5 +14,6 @@ class UserCredentials(BaseModel):
         gmail (str): The user's Gmail address.
         password (str): The user's password.
     """
+    __tablename__ = "users"
     gmail: str
     password: str

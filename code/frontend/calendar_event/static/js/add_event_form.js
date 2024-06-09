@@ -86,3 +86,13 @@ function clearPreview() {
     document.getElementById('timePreview').textContent = '';
     document.getElementById('emailsList').innerHTML = '';
 }
+
+function mostrarCuadroTexto() {
+    var cuadroTexto = document.getElementById("miCuadroTexto");
+    cuadroTexto.style.display = "block"; // Mostrar el cuadro de texto
+}
+
+function ocultarCuadroTexto() {
+    var cuadroTexto = document.getElementById("miCuadroTexto");
+    cuadroTexto.style.display = "none"; // Ocultar el cuadro de texto
+}

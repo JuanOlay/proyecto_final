@@ -11,8 +11,11 @@ from db_connection import PostgresConnection
 from typing import List
 from datetime import date, datetime
 import calendar
+<<<<<<< Updated upstream
 import sys
 sys.path.append('c:/Users/felipe guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/code/backend')
+=======
+>>>>>>> Stashed changes
 
 
 class Calendar():

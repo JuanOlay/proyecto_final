@@ -29,6 +29,5 @@ This is an application to emulate
 
 - login -> User.login   POST    {gmail, password}
 - saveEvent -> User.save_event  POST    {Event}
-- updateEvent -> User.update_event  PUT    {name, day, type_of_event, notif_bool, email_adresses_list, notif_time}
 - showByTypes -> Calendar.show_by_type  GET {type_of_event}
 - markReceiveNotifications -> Event.mark_receive_notifications PATH {event}

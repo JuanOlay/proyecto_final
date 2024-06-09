@@ -149,6 +149,76 @@ const monthSelector = document.getElementById("month-selector");
 const yearSelector = document.getElementById("year-selector");
 const currentMonthElement = document.getElementById("current-month");
 
+<<<<<<< Updated upstream
+=======
+
+// Modal elements
+const deleteEventModal = document.getElementById("deleteEventModal");
+const deleteEventForm = document.getElementById("deleteEventForm");
+const closeModal = document.getElementsByClassName("close")[0];
+
+/**
+ * Shows the delete event modal.
+ */
+function showDeleteModal() {
+    var modal = document.getElementById("deleteEventModal");
+    modal.style.display = "block";
+}
+
+/**
+ * Hides the delete event modal.
+ */
+function hideDeleteModal() {
+    var modal = document.getElementById("deleteEventModal");
+    modal.style.display = "none";
+}
+
+// Close modal when clicking on the close button
+document.querySelector('.modal .close').addEventListener('click', hideDeleteModal);
+
+
+// Close modal when clicking outside of the modal content
+window.onclick = function(event) {
+    var modal = document.getElementById("deleteEventModal");
+    if (event.target == modal) {
+        hideDeleteModal();
+    }
+}
+
+/**
+ * Handles form submission for deleting an event.
+ * @param {Event} event - The form submission event.
+ */
+document.getElementById("deleteEventForm").onsubmit = function(event) {
+    event.preventDefault();
+    var eventName = document.getElementById("eventName").value;
+    console.log("Evento a eliminar: " + eventName);
+    hideDeleteModal();
+}
+
+/**
+ * Handles the delete event form submission.
+ * @param {Event} event - The form submission event.
+ */
+deleteEventForm.onsubmit = function(event) {
+    event.preventDefault();
+    const eventName = document.getElementById("eventName").value;
+    if (eventName) {
+        loadEvents().then(events => {
+            const eventExists = checkEventExists(events, eventName);
+            if (eventExists) {
+                delete_event(eventName);
+                hideDeleteModal(); // Close modal after deleting the event
+            } else {
+                alert("No existe ningún evento con ese nombre.");
+            }
+        });
+    } else {
+        alert("Por favor, ingresa un nombre de evento válido.");
+    }
+};
+
+>>>>>>> Stashed changes
 /**
  * Updates the text displaying the current month and year.
  * @param {number} year - The year.

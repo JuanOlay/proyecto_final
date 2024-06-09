@@ -12,6 +12,7 @@ from sqlalchemy.orm import declarative_base
 
 class Event(BaseModel):
     """This class represents the behavior of a event"""
+    __tablename__ = "events"
     day : date
     type_of_event : str
     name : str
@@ -123,3 +124,34 @@ class EventDB(Base):
     notif_bool = Column(Boolean)
     email_adresses_list = Column(String)
     notif_time = Column(DateTime)
+<<<<<<< Updated upstream
+=======
+
+def make_notification_email(json_event):
+    """
+    This method sends a notification email for a given event.
+    
+    Args:
+        json_event (dict): A dictionary containing the information of the event.
+    """
+    if json_event.get("notif_bool", False):
+        try:
+            # Autenticación SMTP usando yagmail
+            yag = yagmail.SMTP('yopipe1211@gmail.com', 'pyjo igwy inte smyp')
+
+
+            # Envío de correo electrónico usando yagmail
+            yag.send(
+                to=json_event["email_adresses_list"],
+                subject="Notificación de evento",
+                #pylint: disable=line-too-long
+                contents=f"¡Hola! Se ha creado un nuevo evento: {json_event['name']} en la fecha {json_event['day']}"
+                )
+
+            print("Correo electrónico enviado correctamente")
+        # pylint: disable=broad-exception-caught
+        except Exception as e:
+            print(f"Error al enviar el correo electrónico: {str(e)}")
+    else:
+        print("No se envió el correo electrónico porque la notificación no está habilitada.")
+>>>>>>> Stashed changes

@@ -15,9 +15,9 @@ from db_connection import PostgresConnection
 
 metadata = MetaData()
 engine = PostgresConnection(
-    db_user="postgres",
-    password="password",
-    host="localhost",
+    db_user ="postgres",
+    password ="password",
+    host ="localhost",
     port=5432,
     database_name="Calendario_para_proyecto_final"
 ).engine

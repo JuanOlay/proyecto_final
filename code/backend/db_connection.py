@@ -26,9 +26,9 @@ class PostgresConnection:
     """
 
     def __init__(
-        self, gmail: str, password: str, host: str, port: int, database_name: str
+        self, db_user: str, password: str, host: str, port: int, database_name: str
     ):
         self.engine = create_engine(
-            f"postgresql://{gmail}:{password}@{host}:{port}/{database_name}"
+            f"postgresql://{db_user}:{password}@{host}:{port}/{database_name}"
         )
-        self.session = sessionmaker(bind=self.engine)
+        self.SessionLocal = sessionmaker(bind=self.engine)

@@ -1,30 +1,30 @@
 {% load static %}
 
 <html lang="es">
-    <head>
-        <title>Calendar</title>
-        <meta charset="UTF-8">
-        <meta name="author" content="Juan Guevara">
-        <meta name="description" content="Calendar for final project">
-        <meta name="keywords" content="calendar, final project, Juan Guevara">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/styles_login.css' %}">
-        <script src="{% static 'js/login_.js' %}" defer></script>
-    </head>
-    <body>
-        <header>
-            <img src="{% static 'images/login_logo.jpeg' %}" alt="Logo" class="header-image">
-        </header>
-        <div class="login-container">
-            <div class="input-field">
-                <label for="correo">Correo</label>
-                <input type="text" id="correo" placeholder="Ingresa tu correo">
-            </div>
-            <div class="input-field">
-                <label for="contrasena">Contraseña</label>
-                <input type="password" id="contrasena" placeholder="Ingresa tu contraseña">
-            </div>
-            <button onclick="login()" class="login-button">Ingresar</button>
-        </div>
-    </body>
+<head>
+    <title>Calendar</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="Juan Guevara">
+    <meta name="description" content="Calendar for final project">
+    <meta name="keywords" content="calendar, final project, Juan Guevara">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles_login.css' %}">
+    <script src="{% static 'js/login.js' %}" defer></script>
+</head>
+<body>
+<header>
+    <img src="{% static 'images/login_logo.jpeg' %}" alt="Logo" class="header-image">
+</header>
+<div class="login-container">
+    <div class="input-field">
+        <label for="correo">Correo</label>
+        <input type="text" id="correo" placeholder="Ingresa tu correo">
+    </div>
+    <div class="input-field">
+        <label for="contrasena">Contraseña</label>
+        <input type="password" id="contrasena" placeholder="Ingresa tu contraseña">
+    </div>
+    <button id="loginButton" class="login-button" data-url="{% url 'index' %}">Ingresar</button>
+
+</body>
 </html>

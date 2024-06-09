@@ -138,7 +138,7 @@ def make_notification_email(json_event):
     if json_event.get("notif_bool", False):
         try:
             # Autenticación SMTP usando yagmail
-            yag = yagmail.SMTP('yopipe1211@gmail.com', 'nlze inhn vuzk joco')
+            yag = yagmail.SMTP('yopipe1211@gmail.com', 'hgug yjse qsjg ymhn')
 
 
             # Envío de correo electrónico usando yagmail

@@ -14,6 +14,7 @@ function getCurrentDate() {
     };
 }
 
+//replace in html function of python 
 /**
  * Loads events from the server.
  * @returns {Promise<Array>} A promise that resolves to an array of events.
@@ -31,6 +32,7 @@ function loadEvents() {
         });
 }
 
+//replace in html function of python 
 /**
  * Loads the calendar events for the specified year and month.
  * @param {number} year - The year.
@@ -51,18 +53,11 @@ function loadCalendar(year, month) {
         });
 }
 
-/**
- * Shows details of an event in an alert.
- * @param {Object} event - The event object.
- */
-function showEventDetails(event) {
-    alert(`Event details:\n\nName: ${event.name || 'Name not available'}\nType: ${event.type_of_event || 'Type not available'}\nDate: ${event.day}`);
-}
-
 // Get current date, load the calendar, and display events
 const currentDate = getCurrentDate();
 loadCalendar(currentDate.year, currentDate.month);
 
+//replace in html function of python 
 /**
  * Displays events in two columns.
  * @param {Array} daysWithEvents - Array of days with events.
@@ -126,6 +121,7 @@ function displayEvents(daysWithEvents, events, year, month) {
     rightColumn.style.height = `${maxHeight}px`;
 }
 
+//replace in html function of python 
 /**
  * Creates an event box element.
  * @param {number} day - The day of the event.
@@ -148,6 +144,73 @@ const nextMonthButton = document.getElementById("next-month");
 const monthSelector = document.getElementById("month-selector");
 const yearSelector = document.getElementById("year-selector");
 const currentMonthElement = document.getElementById("current-month");
+
+
+// Modal elements
+const deleteEventModal = document.getElementById("deleteEventModal");
+const deleteEventForm = document.getElementById("deleteEventForm");
+const closeModal = document.getElementsByClassName("close")[0];
+
+/**
+ * Shows the delete event modal.
+ */
+function showDeleteModal() {
+    var modal = document.getElementById("deleteEventModal");
+    modal.style.display = "block";
+}
+
+/**
+ * Hides the delete event modal.
+ */
+function hideDeleteModal() {
+    var modal = document.getElementById("deleteEventModal");
+    modal.style.display = "none";
+}
+
+// Close modal when clicking on the close button
+document.querySelector('.modal .close').addEventListener('click', hideDeleteModal);
+
+
+// Close modal when clicking outside of the modal content
+window.onclick = function(event) {
+    var modal = document.getElementById("deleteEventModal");
+    if (event.target == modal) {
+        hideDeleteModal();
+    }
+}
+
+/**
+ * Handles form submission for deleting an event.
+ * @param {Event} event - The form submission event.
+ */
+document.getElementById("deleteEventForm").onsubmit = function(event) {
+    event.preventDefault();
+    var eventName = document.getElementById("eventName").value;
+    console.log("Evento a eliminar: " + eventName);
+    hideDeleteModal();
+}
+
+/**
+ * Handles the delete event form submission.
+ * @param {Event} event - The form submission event.
+ */
+deleteEventForm.onsubmit = function(event) {
+    event.preventDefault();
+    const eventName = document.getElementById("eventName").value;
+    if (eventName) {
+        loadEvents().then(events => {
+            const eventExists = checkEventExists(events, eventName);
+            if (eventExists) {
+                delete_event(eventName);
+                hideDeleteModal(); // Close modal after deleting the event
+            } else {
+                alert("No existe ningún evento con ese nombre.");
+            }
+        });
+    } else {
+        alert("Por favor, ingresa un nombre de evento válido.");
+    }
+};
 
 /**
  * Updates the text displaying the current month and year.
@@ -211,7 +274,14 @@ function filtro() {
     const filterInput = document.getElementById("filter-input").value.trim().toLowerCase();
     const filterType = document.getElementById("filter-type").value; // Can be 'name' or 'type_of_event'
 
-    fetch(`http://localhost:8080/calendar/show_by_type/${filterType}?filter=${filterInput}`)
+    let fetchUrl = '';
+    if (filterType === 'name') {
+        fetchUrl = `http://localhost:8080/calendar/show_by_name/${filterInput}`;
+    } else if (filterType === 'type_of_event') {
+        fetchUrl = `http://localhost:8080/calendar/show_by_type/${filterInput}`;
+    }
+
+    fetch(fetchUrl)
         .then(response => response.json())
         .then(filteredEvents => {
             createEventList(filteredEvents);
@@ -219,6 +289,76 @@ function filtro() {
         .catch(error => {
             console.error('Error filtering events:', error);
         });
+}
+
+/**
+ * Creates and displays a list of events.
+ * @param {Array} events - Array of events to display.
+ */
+function createEventList(events) {
+    // Limpiar los contenedores de columnas
+    leftColumn.innerHTML = '';
+    rightColumn.innerHTML = '';
+
+    // Eliminar duplicados de la lista de eventos
+    const uniqueEvents = events.filter((event, index, self) =>
+        index === self.findIndex((e) => (
+            e.name === event.name && e.type_of_event === event.type_of_event
+        ))
+    );
+
+    const midIndex = Math.ceil(uniqueEvents.length / 2);
+    const leftColumnEvents = uniqueEvents.slice(0, midIndex);
+    const rightColumnEvents = uniqueEvents.slice(midIndex);
+
+    leftColumnEvents.forEach(event => {
+        const eventBox = createEventBoxFromEvent(event);
+        leftColumn.appendChild(eventBox);
+    });
+
+    rightColumnEvents.forEach(event => {
+        const eventBox = createEventBoxFromEvent(event);
+        rightColumn.appendChild(eventBox);
+    });
+
+    // Ajustar la altura de las columnas según la cantidad real de eventos
+    const leftColumnHeight = leftColumn.offsetHeight;
+    const rightColumnHeight = rightColumn.offsetHeight;
+    const maxHeight = Math.max(leftColumnHeight, rightColumnHeight);
+    leftColumn.style.height = `${maxHeight}px`;
+    rightColumn.style.height = `${maxHeight}px`;
+}
+
+
+/**
+ * Creates an event box element from an event object.
+ * @param {Object} event - The event object.
+ * @returns {HTMLElement} The event box element.
+ */
+function createEventBoxFromEvent(event) {
+    const eventBox = document.createElement('div');
+    eventBox.classList.add('event-box');
+    eventBox.innerHTML = `
+        <h3>${new Date(event.day).getDate()} ${new Date(event.day).toLocaleString('es', { month: 'long' })} ${new Date(event.day).getFullYear()}</h3>
+        <div class="event-details">
+            <p><strong>Name:</strong> ${event.name || 'Name not available'}</p>
+            <p><strong>Type:</strong> ${event.type_of_event || 'Type not available'}</p>
+            <p><strong>Notify:</strong> ${event.notif_bool ? 'Yes' : 'No'}</p>
+            <p><strong>Emails:</strong> ${event.email_adresses_list ? event.email_adresses_list.join(', ') : 'Not available'}</p>
+            <p><strong>Notification Time:</strong> ${event.notif_time || 'Not available'}</p>
+        </div>
+    `;
+    eventBox.addEventListener('click', () => showEventDetails(event));
+    return eventBox;
+}
+
+//replace in html function of python 
+/**
+ * Shows details of an event in an alert.
+ * @param {Object} event - The event object.
+ */
+function showEventDetails(event) {
+    alert(`Event details:\n\nName: ${event.name || 'Name not available'}\nType: ${event.type_of_event || 'Type not available'}\nDate: ${event.day}`);
 }
 
 /**
@@ -231,21 +371,47 @@ function delete_event(eventName) {
     })
     .then(response => {
         if (response.ok) {
-            alert('Event successfully deleted');
-            // Update the event list
-            filtro();
+            alert('Evento eliminado correctamente');
+            loadCalendar(currentDate.year, currentDate.month); // Reload the calendar (update the events)
         } else {
-            alert('Error deleting the event');
+            alert('Error al eliminar el evento');
         }
     })
     .catch(error => {
-        console.error('Error deleting the event:', error);
+        console.error('Error al eliminar el evento:', error);
     });
 }
 
 /**
- * Navigates to the add event page.
+ * Checks if an event with the specified name exists.
+ * @param {Array} events - Array containing event data.
+ * @param {string} eventName - The name of the event to check.
+ * @returns {boolean} True if the event exists, otherwise false.
  */
-function add_event() {
-    window.location.href = 'C:/Users/felipe%20guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/code/web_gui/add_event_form.html'; // Adjust the path as necessary
+function checkEventExists(events, eventName) {
+    return events.some(event => event.name === eventName);
 }
+
+/**
+ * Handles the delete event process.
+ */
+function handleDeleteEvent() {
+    const eventName = promptEventName();
+    if (eventName) {
+        // Get the list of events and then check if an event with the same name exists
+        loadEvents().then(events => {
+            const eventExists = checkEventExists(events, eventName);
+            if (eventExists) {
+                delete_event(eventName);
+            } else {
+                alert("No existe ningún evento con ese nombre.");
+            }
+        });
+    } else {
+        alert("Por favor, ingresa un nombre de evento válido.");
+    }
+}
+
+// Event listener for delete event button
+const deleteEventButton = document.getElementById("delete-event-button");
+deleteEventButton.addEventListener("click", showDeleteModal);

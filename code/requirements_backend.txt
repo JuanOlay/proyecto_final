@@ -3,11 +3,8 @@ datetime
 fastapi
 sqlalchemy 
 uvicorn
-<<<<<<< Updated upstream
-=======
 yagmail
 pytz
 Redis
 celery
 psycopg2-binary
->>>>>>> Stashed changes

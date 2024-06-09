@@ -7,6 +7,27 @@ services:
       - "8080:8080"
     networks:
       - local
+    depends_on:
+      - celery
+
+  celery:
+    build:
+      context: .
+      dockerfile: ap_backend_celery.Dockerfile
+    ports:
+      - "6379:6379"
+    networks:
+      - local
+  ap-frontend:
+    build:
+      context: .
+      dockerfile: ap_frontend.Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - local
+    depends_on:
+      - ap-backend
 
   ap-frontend:
     build:

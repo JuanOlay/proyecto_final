@@ -1,20 +1,23 @@
 """This file  has theentry point implementtion for RESTapi services."""
+# pylint: disable=wrong-import-order
 from typing import List
-from datetime import date, datetime
+# pylint: disable=import-error
+from celery_config import send_notification_email
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # pylint: disable=E0401
 from users_sub import User
 from core import Calendar, Event
+# pylint: disable=E0401
 from sqlalchemy import MetaData, Table, Column, String
 from sqlalchemy.orm import sessionmaker
 from db_connection import PostgresConnection
 
 metadata = MetaData()
 engine = PostgresConnection(
-    db_user="postgres",
-    password="password",
-    host="localhost",
+    db_user ="postgres",
+    password ="password",
+    host ="localhost",
     port=5432,
     database_name="Calendario_para_proyecto_final"
 ).engine
@@ -86,41 +89,23 @@ def save_event(event: Event):
     """This service lets add a new event"""
     json_event = event.to_json()
     Calendar.add_events(json_event)
-
-@app.put("/user/update_event/{name}")
-def update_events(day : date, type_of_event : str,
-        notif_bool : bool, email_adresses_list : List, notif_time : datetime
-        ):
-    """This service lets update an event"""
-    Calendar.update_event(day, type_of_event,
-        notif_bool, email_adresses_list, notif_time)
-
-# pylint: disable=W0105
-"""
-no estoy seguro de esta mierda
-@app.get("/calendar/get_type_of_dates", response_model=List[str])
-def get_type_of_dates():
-
-osea tipo faltaria una lista de los tipos de eventos en el calendario o seria en eventos ? 
-creo que mas bien seria en eventos sip seria en eventos -pipe habla solo pq sueña con aullarle a la luna
-"""
-
+    send_notification_email(json_event)
+    return {
+        "message":
+        "Evento guardado y notificación por correo electrónico en cola para ser enviada."
+        }
 
 @app.get("/calendar/show_by_type/{type_of_event}", response_model = List[Event])
 def show_by_type(type_of_event: str):
     """This service lets show the events by type"""
     return Calendar.show_by_type(type_of_event = type_of_event)
 
-# pylint: disable=W0105
-"""
-@app.patch("/event/mark_receive_notifications/{event}")
-def mark_receive_notifications(event : Event) -> bool:
-    #This is a service to decide receive notifications
-    event = Event
-    return event.mark_receive_notifications(event)
-"""
-
 @app.delete("/user/delete_event/{name}")
 def delete_event(name: str):
     """This service lets delete an event"""
     Calendar.delete_event(name)
+
+@app.get("/calendar/show_by_name/{name}", response_model = List[Event])
+def show_by_name(name: str):
+    """This service lets show the events by name"""
+    return Calendar.get_event(name)

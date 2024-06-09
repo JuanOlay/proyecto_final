@@ -15,7 +15,7 @@ function login() {
     if (correo && contrasena) {
         // Obtener la URL del atributo data-url del botón
         const url = document.getElementById('loginButton').getAttribute('data-url');
-        
+
         // Redirigir al usuario a la URL obtenida
         window.location.href = url;
     } else {

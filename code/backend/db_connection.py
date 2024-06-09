@@ -1,6 +1,6 @@
 """
-This file contains the classes and methods to
-authenticate and manage the conection to a PostgreSQL database.
+This file contains the classes and methods to authenticate
+and manage the conection to a PostgreSQL database.
 
 Author: Juan Felipe Guevara Olaya <> Junquito <>
 """
@@ -26,13 +26,9 @@ class PostgresConnection:
     """
 
     def __init__(
-            self, db_user: str, password: str, host: str, port: int, database_name: str
-            ):
+        self, db_user: str, password: str, host: str, port: int, database_name: str
+    ):
         self.engine = create_engine(
             f"postgresql://{db_user}:{password}@{host}:{port}/{database_name}"
         )
-<<<<<<< Updated upstream
-        self.session = sessionmaker(bind=self.engine)
-=======
         self.SessionLocal = sessionmaker(bind=self.engine)
->>>>>>> Stashed changes

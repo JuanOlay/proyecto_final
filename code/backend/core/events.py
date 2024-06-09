@@ -4,11 +4,14 @@ This file contains the classes and methods to manage the events of the applicati
 Author: Juan Felipe Guevara Olaya <> Junquito <>
 
 """
+# pylint: disable=import-error
+# pylint: disable=wrong-import-order
 from datetime import date, datetime
 from typing import List
 from pydantic import BaseModel
 from sqlalchemy import Column, String, Date, Boolean, DateTime
 from sqlalchemy.orm import declarative_base
+import yagmail
 
 class Event(BaseModel):
     """This class represents the behavior of a event"""
@@ -124,8 +127,6 @@ class EventDB(Base):
     notif_bool = Column(Boolean)
     email_adresses_list = Column(String)
     notif_time = Column(DateTime)
-<<<<<<< Updated upstream
-=======
 
 def make_notification_email(json_event):
     """
@@ -137,7 +138,7 @@ def make_notification_email(json_event):
     if json_event.get("notif_bool", False):
         try:
             # Autenticación SMTP usando yagmail
-            yag = yagmail.SMTP('yopipe1211@gmail.com', 'pyjo igwy inte smyp')
+            yag = yagmail.SMTP('yopipe1211@gmail.com', 'hgug yjse qsjg ymhn')
 
 
             # Envío de correo electrónico usando yagmail
@@ -154,4 +155,3 @@ def make_notification_email(json_event):
             print(f"Error al enviar el correo electrónico: {str(e)}")
     else:
         print("No se envió el correo electrónico porque la notificación no está habilitada.")
->>>>>>> Stashed changes

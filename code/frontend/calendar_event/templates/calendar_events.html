@@ -1,8 +1,11 @@
+{% load static %}
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventos</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles_calendar_events.css' %}">
 <body>
     <div class="calendar-container">
         <div class="navigation">
@@ -30,28 +33,48 @@
             <button id="next-month">❯</button>
             </div>
            <div id="current-month" class="month-display">Mes 2024</div>
-           <a href="index.html" class="navigation" >
+           <a href="{% url 'index' %}" class="navigation" >
            <button id="image-button" class="image-button">
-            <img src="images/index_logo_button.png" alt="Descripción" />
+            <img src="{% static 'images/index_logo_button.png' %}" alt="Descripción" />
             </button>
            </a>
-           <div id="filtro" class="filtro">
-            <input type="text" id="filtro" placeholder="Filtrar por evento">
-            <button onclick="javascript:filtro()" class="filtro-button">Filtrar</button>
         </div>
+
+           <div>
+            <input type="text" id="filter-input" placeholder="Filter by name or type">
+            <select id="filter-type">
+                <option value="name">Name</option>
+                <option value="type_of_event">Type</option>
+            </select>
+            <button onclick="filtro()">Filter</button>
         </div>
 
     <div class="container">
         <div id="left-column" class="column"></div>
         <div id="right-column" class="column"></div>
     </div>
-    <script src="calendar_events.js"></script>
+
     <div class="calendar-controls">
-        <button onclick="javascript:add_event()" class="control-button-plus" id="add-event">＋</button>
-        <button onclick = "javascript:delete_event()" class="control-button-minus" id="remove-event">－</button>
+        <a href="{% url 'add_event_form' %}">
+        <button class="control-button-plus" id="add-event">Añadir evento</button>
+        </a>
+    <button onclick="javascript:showDeleteModal()" class="control-button-minus" id="remove-event">Eliminar evento</button>
     </div>
-    <footer>
-        <p>&copy; 2024 Calendar for project UD</p>
-    </footer>  
+
+    <div id="deleteEventModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Eliminar Evento</h2>
+            <form id="deleteEventForm">
+                <label for="eventName">Nombre del evento:</label>
+                <input type="text" id="eventName" name="eventName" required>
+                <button type="submit">Eliminar</button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <script src="{% static 'js/calendar_events.js' %}"></script>
+    
 </body>
 </html>

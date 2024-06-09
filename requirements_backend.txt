@@ -1,5 +1,0 @@
-pydantic
-datetime
-fastapi
-sqlalchemy 
-uvicorn

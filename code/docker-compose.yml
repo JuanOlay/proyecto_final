@@ -1,0 +1,28 @@
+services:
+  ap-backend:
+    build:
+      context: .
+      dockerfile: ap_backend.Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - local
+
+  ap-frontend:
+    build:
+      context: .
+      dockerfile: ap_frontend.Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - ap-backend
+    networks:
+      - local
+
+volumes:
+  db_data_ap:
+    driver: local
+
+networks:
+  local:
+    driver: bridge

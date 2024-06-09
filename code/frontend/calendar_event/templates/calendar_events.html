@@ -1,0 +1,57 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos</title>
+<body>
+    <div class="calendar-container">
+        <div class="navigation">
+            <div class = "navigation2">
+            <button id="prev-month">❮</button>
+            <select id="month-selector">
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>
+            <select id="year-selector">
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+            </select>
+            <button id="next-month">❯</button>
+            </div>
+           <div id="current-month" class="month-display">Mes 2024</div>
+           <a href="index.html" class="navigation" >
+           <button id="image-button" class="image-button">
+            <img src="images/index_logo_button.png" alt="Descripción" />
+            </button>
+           </a>
+           <div id="filtro" class="filtro">
+            <input type="text" id="filtro" placeholder="Filtrar por evento">
+            <button onclick="javascript:filtro()" class="filtro-button">Filtrar</button>
+        </div>
+        </div>
+
+    <div class="container">
+        <div id="left-column" class="column"></div>
+        <div id="right-column" class="column"></div>
+    </div>
+    <script src="calendar_events.js"></script>
+    <div class="calendar-controls">
+        <button onclick="javascript:add_event()" class="control-button-plus" id="add-event">＋</button>
+        <button onclick = "javascript:delete_event()" class="control-button-minus" id="remove-event">－</button>
+    </div>
+    <footer>
+        <p>&copy; 2024 Calendar for project UD</p>
+    </footer>  
+</body>
+</html>

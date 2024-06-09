@@ -1,0 +1,153 @@
+<html lang="es">
+<head>
+    <title>Form events</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="Juan Guevara">
+    <meta name="description" content="Calendar for final project">
+    <meta name="keywords" content="calendar, final project, Juan Guevara">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="add_event_form.js" defer></script>
+    <style>
+        
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+        }
+        
+        .form-title {
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 5px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        
+        .form-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        
+        .display-area {
+            background-color: #ff0000; 
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-right: 20px; 
+        }
+        
+        .form-container form {
+            flex: 0 1 45%;
+        }
+        
+        #listaCorreos {
+            flex: 0 1 48%;
+            margin-left: 20px;
+        }
+        
+        #correo {
+            margin-right: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form id="add-event-form" class="form-group">
+            <div class="form-title">AÑADIR FECHA IMPORTANTE</div>
+            <label for="day">Día:</label>
+            <input type="date" id="day" name="day" required oninput="updatePreview()">
+
+            <label for="type_of_event">Tipo de Evento:</label>
+            <input type="text" id="type_of_event" name="type_of_event" required oninput="updatePreview()">
+
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" required oninput="updatePreview()">
+
+            <label for="notif_bool">Notificación:</label>
+            <input type="checkbox" id="notif_bool" name="notif_bool" onclick="updatePreview()">
+
+            <label for="correo">Lista de Emails:</label>
+            <div class="email-input-container">
+                <input type="email" id="correo" name="correo">
+                <button type="button" id="agregarCorreo" onclick="addEmail()">Agregar</button>
+                <br>
+                <br>
+            </div>            
+
+            <label for="notif_time">Hora de Notificación:</label>
+            <input type="datetime-local" id="notif_time" name="notif_time" oninput="updatePreview()">
+
+            <div class="form-group">
+                <br>
+                <br>
+                <button type="button" onclick="save_event()">Guardar Evento</button>
+                <a href="index.html">
+                    <button type="button">Volver</button>
+                </a>
+            </div>
+        </form>
+
+        <div id="listaCorreos" class="display-area">
+            <h3>Datos ingresados:</h3>
+            <p><strong>Nombre:</strong> <span id="namePreview"></span></p>
+            <p><strong>Tipo de Evento:</strong> <span id="typePreview"></span></p>
+            <p><strong>Fecha:</strong> <span id="dayPreview"></span></p>
+            <p><strong>Notificación:</strong> <span id="notifPreview"></span></p>
+            <p><strong>Hora de Notificación:</strong> <span id="timePreview"></span></p>
+            <p><strong>Correos:</strong> <ul id="emailsList"></ul></p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Calendar for proyect UD</p>
+    </footer>  
+</body>
+</html>

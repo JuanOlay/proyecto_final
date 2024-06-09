@@ -15,6 +15,7 @@ import yagmail
 
 class Event(BaseModel):
     """This class represents the behavior of a event"""
+    __tablename__ = "events"
     day : date
     type_of_event : str
     name : str

@@ -2,3 +2,9 @@ pydantic
 datetime
 fastapi
 sqlalchemy 
+uvicorn
+yagmail
+pytz
+Redis
+celery
+psycopg2-binary

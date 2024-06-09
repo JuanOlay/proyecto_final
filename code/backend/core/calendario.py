@@ -8,10 +8,7 @@ from .events import Event, EventDB
 # pylint: disable=E0401
 from db_connection import PostgresConnection
 import calendar
-import sys
-sys.path.append(
-    'c:/Users/felipe guevara.DESKTOP-OGTAIET/Documents/GitHub/Final_Project/code/backend'
-    )
+
 
 class Calendar():
     """This class represents a calendar"""

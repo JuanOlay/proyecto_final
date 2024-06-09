@@ -8,6 +8,28 @@ from fastapi.middleware.cors import CORSMiddleware
 # pylint: disable=E0401
 from users_sub import User
 from core import Calendar, Event
+# pylint: disable=E0401
+from sqlalchemy import MetaData, Table, Column, String
+from sqlalchemy.orm import sessionmaker
+from db_connection import PostgresConnection
+
+metadata = MetaData()
+engine = PostgresConnection(
+    db_user="postgres",
+    password="password",
+    host="localhost",
+    port=5432,
+    database_name="Calendario_para_proyecto_final"
+).engine
+Session = sessionmaker(bind=engine)
+session = Session()
+
+users = Table(
+    "users",
+    metadata,
+    Column("gmail", String, primary_key=True),
+    Column("password", String)
+)
 
 app = FastAPI()
 
@@ -18,6 +40,19 @@ app.add_middleware(
     allow_methods=["*"],  # Permite todos los métodos
     allow_headers=["*"],  # Permite todos los encabezados
 )
+
+@app.post("/user/register", response_model=User)
+def register(user : User):
+    """
+    This method registers a new user.
+
+    Args:
+        user (User): The user to be registered.
+    """
+    query = users.insert().values(gmail = user.gmail , password = user.password)
+    session.execute(query)
+    session.commit()
+    return User.register(user)
 
 @app.get("/")
 async def read_root():

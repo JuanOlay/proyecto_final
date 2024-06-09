@@ -7,3 +7,4 @@ yagmail
 pytz
 Redis
 celery
+psycopg2-binary

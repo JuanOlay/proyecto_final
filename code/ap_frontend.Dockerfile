@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir -r requirements_frontend.txt
 COPY ./frontend /frontend/
 
 # Expose port
-EXPOSE 80
+EXPOSE 8082
 
 # Run the application:
-CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8082"]

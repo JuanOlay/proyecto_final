@@ -1,5 +1,6 @@
 """
-This file contains the classes and methods to authenticate and manage the conection to a PostgreSQL database.
+This file contains the classes and methods to authenticate
+and manage the conection to a PostgreSQL database.
 
 Author: Juan Felipe Guevara Olaya <> Junquito <>
 """

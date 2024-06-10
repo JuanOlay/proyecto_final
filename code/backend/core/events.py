@@ -71,9 +71,7 @@ class Event(BaseModel):
 
     def add_to_db(self):
         """
-        ni idea de para que es esta funcion pero se ve bonita ahi
-
-        creo que es para añadirlo a la base de datos :p
+        This method is used to add the event to the database.
         """
         # pylint: disable=unused-variable
         session = self.connection.session()

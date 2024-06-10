@@ -296,11 +296,10 @@ function filtro() {
  * @param {Array} events - Array of events to display.
  */
 function createEventList(events) {
-    // Limpiar los contenedores de columnas
+
     leftColumn.innerHTML = '';
     rightColumn.innerHTML = '';
 
-    // Eliminar duplicados de la lista de eventos
     const uniqueEvents = events.filter((event, index, self) =>
         index === self.findIndex((e) => (
             e.name === event.name && e.type_of_event === event.type_of_event
@@ -321,7 +320,6 @@ function createEventList(events) {
         rightColumn.appendChild(eventBox);
     });
 
-    // Ajustar la altura de las columnas según la cantidad real de eventos
     const leftColumnHeight = leftColumn.offsetHeight;
     const rightColumnHeight = rightColumn.offsetHeight;
     const maxHeight = Math.max(leftColumnHeight, rightColumnHeight);

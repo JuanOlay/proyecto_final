@@ -48,7 +48,7 @@ Notification Service:
 
 ## Diagram Sequence
 
-<img src="Sequence.png">
+<img src="sequence.png">
 
 ## Diagram Activities
 

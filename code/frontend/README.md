@@ -4,12 +4,12 @@ This is an example of a frontend using Django and HTML-CSS-JS team.
 
 ## Website Navigation Map
 
-- **Login**: [http://localhost:8082/login](http://localhost:8082/login)
+- **Login**: [http://localhost:8082/event/login](http://localhost:8082/event/login)
   - From Login, you navigate to:
-    - **Main Page**: [http://localhost:8082/index](http://localhost:8082/index)
+    - **Main Page**: [http://localhost:8082/event/index](http://localhost:8082/event/index)
       - From the Main Page, you can navigate to:
-        - **Add Event Form**: [http://localhost:8082/add_event_form](http://localhost:8082/add_event_form)
-        - **Calendar Events Page**: [http://localhost:8082/calendar_events](http://localhost:8082/calendar_events)
+        - **Add Event Form**: [http://localhost:8082/event/add_event_form](http://localhost:8082/event/add_event_form)
+        - **Calendar Events Page**: [http://localhost:8082/event/calendar_events](http://localhost:8082/event/calendar_events)
 
 ## Project Structure
 

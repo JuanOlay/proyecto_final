@@ -40,14 +40,36 @@ Notification Service:
 
 - Yagmail library is employed for sending email notifications to users.
 
+# Diagrams
+
+## Diagram class
+
+<img src="UML.png">
+
+## Diagram Sequence
+
+<img src="Sequence.png">
+
+## Diagram Activities
+
+<img src="actividad.png">
+
 # UI Mockups
 Login Page:
 
+<img src="1.png">
+
 Main Page:
+
+<img src="2.png">
 
 Add Event Form:
 
+<img src="4.png">
+
 Calendar Events Page:
+
+<img src="3.png">
 
 # Web Service Design
 Endpoints:

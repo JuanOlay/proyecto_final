@@ -83,6 +83,14 @@ code/
 ### `frontend/static/`
 - Static files including CSS, JS, and images for the frontend.
 
+## Backend Development
+
+Backend docs: [backend/README.md](./code/backend/README.md).
+
+## Frontend Development
+
+Frontend docs: [frontend/README.md](./code/frontend/README.md)
+
 ## Other Files
 
 - `Dockerfile`: Configuration for Docker container.
